@@ -1,0 +1,44 @@
+{
+  "name": "swe-2.0-curriculum",
+  "version": "0.63.0",
+  "description": "Software engineering curriculum (2021)",
+  "main": "index.js",
+  "scripts": {
+    "makebook": "node ./lib/make-book.js",
+    "build": "node ./lib/main.js",
+    "build-win": "docker run -it -v $PWD:/app -w '/app' node:15-alpine npm i && npm run build",
+    "publish": "node ./lib/main.js && git add -A && git commit -m \"rebuild pages\" --allow-empty && git push origin master",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/MultiverseLearningProducts/curriculum.git"
+  },
+  "keywords": [
+    "software",
+    "apprenticeships",
+    "Multiverse",
+    "change",
+    "future",
+    "leaders"
+  ],
+  "author": "multiverselearningproducts",
+  "license": "CC-BY-NC-ND-4.0",
+  "bugs": {
+    "url": "https://github.com/MultiverseLearningProducts/curriculum/issues"
+  },
+  "homepage": "https://github.com/MultiverseLearningProducts/curriculum#readme",
+  "dependencies": {
+    "directory-tree": "^2.2.4",
+    "highlight.js": "^10.0.0",
+    "lodash.template": "^4.5.0",
+    "markdown-pdf": "^10.0.0",
+    "puppeteer": "^8.0.0",
+    "remarkable": "^2.0.1",
+    "remarkable-admonitions": "^0.2.2",
+    "remarkable-figure-plugin": "^1.0.0"
+  },
+  "devDependencies": {
+    "svgo": "^2.2.2"
+  }
+}

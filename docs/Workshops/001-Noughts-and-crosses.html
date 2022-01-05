@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+    <meta charset="utf-8">
+    <title>
+         Noughts and Crosses
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" href="/curriculum/favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/an-old-hope.min.css">
+    <link rel="stylesheet" href="/curriculum/style.css" />
+    <script src="/curriculum/js/highlight.min.js"></script>
+    <script src="/curriculum/js/bash.min.js"></script>
+    <script src="/curriculum/js/java.min.js"></script>
+    <script src="/curriculum/js/javascript.min.js"></script>
+    <script src="/curriculum/js/sql.min.js"></script>
+</head>
+
+<body>
+    <button id="navigation-toggle" aria-expanded="false" aria-haspopup="true" onclick="toggleNav()"
+        onkeydown="event => {event.keyCode === 13 ? toggleNav() : null}" tabindex="1">Table of contents</button>
+    <nav id="navigation"><ul><details><summary>Workshops</summary><ul><li><a class="nav-link" href="/curriculum/Workshops/001-Noughts-and-crosses.html">001 Noughts and crosses</a></li><li><a class="nav-link" href="/curriculum/Workshops/002-Hotels.html">002 Hotels</a></li><li><a class="nav-link" href="/curriculum/Workshops/003-Supermarkets.html">003 Supermarkets</a></li></ul></details></ul></nav>
+    <h1>Noughts and Crosses</h1>
+<p>In this workshop, you are going to use all the things you have learned about Java code to write a computer program! Our program is going to accept input from the user, store and update the state, it will print out the state so the user can see it, and finally conclude with a win, lose or draw result. What you have studied so far are the primitives of Java, branching logic, and Arrays. These are like the words and phrases of a spoken language. When we write a computer program we combine all these building blocks and compose a story.</p>
+
+    <nav id="footer-nav"></nav>
+    <script src="/curriculum/js/tabbed-code-blocks.js"></script>
+    <script>
+        function toggleNav() {
+            const button = document.getElementById('navigation-toggle')
+            const isAriaExp = button.getAttribute('aria-expanded')
+            const newAriaExp = (isAriaExp == "false") ? "true" : "false"
+            button.setAttribute('aria-expanded', newAriaExp)
+            const nav = document.getElementById('navigation')
+            nav.style.display = nav.offsetParent ? 'none' : 'block'
+        }
+        function footerNav() {
+            const links = document.getElementsByClassName('nav-link')
+            const hrefs = Array.from(links).map(a => a.getAttribute('href'))
+            const [current] = window.location.href.match(/[0-9\.]+[a-zA-Z0-9_\\-]+\.html/) || [0]
+            const index = hrefs.findIndex(href => {
+                const page = href.split(/\\|\//).pop()
+                return page === current
+            })
+            const prevIndex = index - 1
+            const nextIndex = index + 1
+            if (prevIndex > -1) {
+                const prev = document.createElement('a') 
+                prev.appendChild(document.createTextNode("◀︎ Prev"))
+                prev.title = "Previous session notes"
+                prev.href = hrefs[prevIndex]
+                document.getElementById('footer-nav').prepend(prev)
+            }
+            if (nextIndex < hrefs.length) {
+                const next = document.createElement('a') 
+                next.appendChild(document.createTextNode("Next ►"))
+                next.title = "Next session notes"
+                next.href = hrefs[nextIndex]
+                document.getElementById('footer-nav').append(next)
+            }
+            window.removeEventListener('DOMContentLoaded', footerNav)
+        }
+        window.addEventListener('DOMContentLoaded', footerNav)
+    </script>
+</body>
+
+</html>
