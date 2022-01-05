@@ -9,23 +9,140 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" type="image/x-icon" href="/curriculum/favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/an-old-hope.min.css">
-    <link rel="stylesheet" href="/curriculum/style.css" />
-    <script src="/curriculum/js/highlight.min.js"></script>
-    <script src="/curriculum/js/bash.min.js"></script>
-    <script src="/curriculum/js/java.min.js"></script>
-    <script src="/curriculum/js/javascript.min.js"></script>
-    <script src="/curriculum/js/sql.min.js"></script>
+    <link rel="stylesheet" href="/learn-you-java/style.css" />
+    <script src="/learn-you-java/js/highlight.min.js"></script>
+    <script src="/learn-you-java/js/bash.min.js"></script>
+    <script src="/learn-you-java/js/java.min.js"></script>
+    <script src="/learn-you-java/js/javascript.min.js"></script>
+    <script src="/learn-you-java/js/sql.min.js"></script>
 </head>
 
 <body>
     <button id="navigation-toggle" aria-expanded="false" aria-haspopup="true" onclick="toggleNav()"
         onkeydown="event => {event.keyCode === 13 ? toggleNav() : null}" tabindex="1">Table of contents</button>
-    <nav id="navigation"><ul><details><summary>Workshops</summary><ul><li><a class="nav-link" href="/curriculum/Workshops/001-Noughts-and-crosses.html">001 Noughts and crosses</a></li><li><a class="nav-link" href="/curriculum/Workshops/002-Hotels.html">002 Hotels</a></li><li><a class="nav-link" href="/curriculum/Workshops/003-Supermarkets.html">003 Supermarkets</a></li></ul></details></ul></nav>
+    <nav id="navigation"><ul><details><summary>Workshops</summary><ul><li><a class="nav-link" href="/learn-you-java/Workshops/001-Noughts-and-crosses.html">001 Noughts and crosses</a></li><li><a class="nav-link" href="/learn-you-java/Workshops/002-Hotels.html">002 Hotels</a></li><li><a class="nav-link" href="/learn-you-java/Workshops/003-Supermarkets.html">003 Supermarkets</a></li></ul></details></ul></nav>
     <h1>Noughts and Crosses</h1>
 <p>In this workshop, you are going to use all the things you have learned about Java code to write a computer program! Our program is going to accept input from the user, store and update the state, it will print out the state so the user can see it, and finally conclude with a win, lose or draw result. What you have studied so far are the primitives of Java, branching logic, and Arrays. These are like the words and phrases of a spoken language. When we write a computer program we combine all these building blocks and compose a story.</p>
+<h2>Before you start</h2>
+<p>This workshop assumes that you have read through the following sections from <a href="https://www.programiz.com/java-programming">Programviz</a>.</p>
+<ul>
+<li><a href="https://www.programiz.com/java-programming/hello-world">Java Introduction</a></li>
+<li><a href="https://www.programiz.com/java-programming/if-else-statement">Java Flow Control</a></li>
+<li><a href="https://www.programiz.com/java-programming/arrays">Java Arrays</a><br>
+We are going to create a Noughts and Crosses or Tic Tac Toe game. It will be a simple version of the game that you can play on the command line. Learning to use the primitives, flow control, and Arrays as building blocks for an actual program we hope will give you great confidence and inspiration to keep building on your knowledge.</li>
+</ul>
+<hr>
+<h2>Designing a program</h2>
+<p>There are 3 things to consider when we start to design a program:</p>
+<ul>
+<li>The inputs</li>
+<li>The state &amp; processes</li>
+<li>The outputs</li>
+</ul>
+<p>🤔 Let’s think about these 3 things before we start.</p>
+<ul>
+<li>What inputs do we need for a game of tic tac toe?</li>
+<li>What might we need to keep track of in our program?</li>
+<li>What will our program need to output?</li>
+</ul>
+<h3>Setup</h3>
+<p>Create a new Java file in a folder with a name like <code>TicTacToe.java</code>. In that file create a class with the same name at the file, and add the <code>main</code> method. That <code>main</code> method can print out a message to our users. Then run your program to check that everything is set up correctly.</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TicTacToe</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        System.out.println(<span class="hljs-string">&quot;Choose a square between 1-9 to play on&quot;</span>);
+    }
+}
+</code></pre>
+<h2>Input</h2>
+<p>The first thing we need to do for our program to work is to capture input from the user. In Java, there is a module in the core API that will enable us to do that.</p>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> java.util.Scanner;
+</code></pre>
+<p>The way to use this class is to create a single instance for the program to use throughout it’s life cycle. This kind of class is called a ‘Singleton’ because there should be just one instance of the class within the program. This instance enables us to stop the program and capture input from the user, before we continue. We should try to do that now and capture numbers between 1 and 9.</p>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> java.util.Scanner;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TicTacToe</span> </span>{
+    <span class="hljs-keyword">private</span> Scanner scanner = <span class="hljs-keyword">new</span> Scanner(System.in);
+
+    TicTacToe() {
+        captureInput();
+    }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">captureInput</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">int</span> input = scanner.nextInt();
+        System.out.printf(<span class="hljs-string">&quot;You want to play on square %d&quot;</span>, input);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        System.out.println(<span class="hljs-string">&quot;Choose a square between 1-9 to play on&quot;</span>);
+        <span class="hljs-keyword">new</span> TicTacToe();
+    }
+}
+</code></pre>
+<h2>State</h2>
+<p>We have input, now we can think about the state in our program. The state is data that our program creates, reads, updates, and deletes. For us we need to create and maintain the state of the <code>board</code> during the life cycle of our program.</p>
+<h3>The Board</h3>
+<p>A tic-tac-toe board has 9 squares that players can place their counters on. An Array is a great data structure that will help us hold those 9 related pieces of data. Can you add this state to our <code>TicTacToe</code> class?</p>
+<pre><code class="language-java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[] board = {<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>};
+</code></pre>
+<p>If we have input from the user, and a board to play on, we should be able to set a counter on the board where the user chose to play. Usually, the first player is <code>X</code> but we are not going to be able to add <code>X</code> into our Array - why is that?</p>
+<h3>The Players</h3>
+<p>Our Array will only hold integers. So we could substitute the value X for integer 10, and player O with integer 0. This is also state that we will need to keep track of - who’s turn it is? When the game starts the player 10 will take the first move so player should equal 10 when the game starts, then we need to update the state after a play so the next player is player 0. Can you figure out where to add the following 2 pieces of code?</p>
+<pre><code class="language-java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> player = <span class="hljs-number">10</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">move</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> </span>{
+  board[index] = player
+}
+</code></pre>
+<h2>Output</h2>
+<p>In theory, we should now be able to make a play on the tic-tac-toe board. The problem is we can’t see what’s going on. What we need is to print out the board after a move has been made.</p>
+<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printBoard</span><span class="hljs-params">()</span> </span>{
+    System.out.printf(<span class="hljs-string">&quot;%d|%d|%d\n&quot;</span>, board[<span class="hljs-number">0</span>], board[<span class="hljs-number">1</span>], board[<span class="hljs-number">2</span>]);
+    System.out.printf(<span class="hljs-string">&quot;%d|%d|%d\n&quot;</span>, board[<span class="hljs-number">3</span>], board[<span class="hljs-number">4</span>], board[<span class="hljs-number">5</span>]);
+    System.out.printf(<span class="hljs-string">&quot;%d|%d|%d\n&quot;</span>, board[<span class="hljs-number">6</span>], board[<span class="hljs-number">7</span>], board[<span class="hljs-number">8</span>]);
+}
+</code></pre>
+<p>What do you get? I get something like this:</p>
+<pre><code class="language-sh">Choose a square between 1-9 to play on
+1
+10|2|3
+4|5|6
+7|8|9
+</code></pre>
+<p>This needs some work, but you can see we are on our way. Somewhere we need to swap out the <code>10</code> for an <code>X</code> and the <code>0</code> for a <code>O</code> we should do the same for the <code>int</code> values that represent empty squares too. Can you use conditional logic to write a function that takes an <code>int</code> and returns a <code>char</code>? You will have to update your printBoard private method to format <code>char</code> i.e. <code>&quot;%c|%c|%c&quot;</code>and then call your displayCell method to transform the <code>int</code> to a <code>char</code> for display purposes.</p>
+<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">char</span> <span class="hljs-title">displayCell</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> </span>{
+    <span class="hljs-keyword">if</span> (board[index] == <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;X&#x27;</span>;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (board[index] == <span class="hljs-number">10</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;O&#x27;</span>;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> (<span class="hljs-keyword">char</span>) Character.forDigit(board[index], <span class="hljs-number">10</span>);
+    }
+}
+</code></pre>
+<h2>First Milestone</h2>
+<p><figure><img src="https://media.giphy.com/media/RrVzUOXldFe8M/giphy.gif" alt="Keep going" title="You got this, keep going!"><figcaption>You got this, keep going!</figcaption></figure><br>
+This is going to work. We have the basic interaction of our program in place. We can capture user input, update our state and display the state of the tic-tac-toe board back to the user. Ready to build on this? Below is the list of things we need to figure out to play a full game.</p>
+<ol>
+<li>toggle the players</li>
+<li>control the flow of the game returning the prompt for the next user input</li>
+<li>prevent playing over a square that’s been played on</li>
+<li>check for a win</li>
+<li>check for a draw</li>
+<li>display the game over message</li>
+</ol>
+<h3>Toggle the players</h3>
+<p>After a play, we need to toggle the players.</p>
+<p>🤔 Can you write a private method that will return the opposite player from the one that is set?</p>
+<p>This method needs to be called after updating the board, and before we return the prompt to the user.</p>
+<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">nextPlayer</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> player == <span class="hljs-number">0</span> ? <span class="hljs-number">10</span> : <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h3>Next move</h3>
+<p>Once the board is updated and the player has been toggled we want to return the prompt to the user for the next player’s input. This can be as simple as calling our <code>captureInput</code> method again. Can you update your program so you can place alternate counters (<code>X</code> <code>O</code>) on the board. I want you to be <em>able</em> to make illegal moves, like play over a square that is already played on.</p>
+<h3>Prevent illegal moves</h3>
+<p>We should validate or check each move before accepting it. That way if the square is not empty, then we’ll return a message to prompt the player to play again. This check method, what kind of type might it return? and how can we control the different outcomes i.e. a legal move vs an illegal move?</p>
 
     <nav id="footer-nav"></nav>
-    <script src="/curriculum/js/tabbed-code-blocks.js"></script>
+    <script src="/learn-you-java/js/tabbed-code-blocks.js"></script>
     <script>
         function toggleNav() {
             const button = document.getElementById('navigation-toggle')
