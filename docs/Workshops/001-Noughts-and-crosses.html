@@ -23,6 +23,7 @@
     <nav id="navigation"><ul><details><summary>Workshops</summary><ul><li><a class="nav-link" href="/learn-you-java/Workshops/001-Noughts-and-crosses.html">001 Noughts and crosses</a></li><li><a class="nav-link" href="/learn-you-java/Workshops/002-Hotels.html">002 Hotels</a></li><li><a class="nav-link" href="/learn-you-java/Workshops/003-Supermarkets.html">003 Supermarkets</a></li></ul></details></ul></nav>
     <h1>Noughts and Crosses</h1>
 <p>In this workshop, you are going to use all the things you have learned about Java code to write a computer program! Our program is going to accept input from the user, store and update the state, it will print out the state so the user can see it, and finally conclude with a win, lose or draw result. What you have studied so far are the primitives of Java, branching logic, and Arrays. These are like the words and phrases of a spoken language. When we write a computer program we combine all these building blocks and compose a story.</p>
+<p><iframe src="https://www.youtube.com/embed/e6kwa56FrFU" width="100%" height="444px" allowfullscreen frameborder=0></iframe></p>
 <h2>Before you start</h2>
 <p>This workshop assumes that you have read through the following sections from <a href="https://www.programiz.com/java-programming">Programviz</a>.</p>
 <ul>
@@ -140,6 +141,49 @@ This is going to work. We have the basic interaction of our program in place. We
 <p>Once the board is updated and the player has been toggled we want to return the prompt to the user for the next player’s input. This can be as simple as calling our <code>captureInput</code> method again. Can you update your program so you can place alternate counters (<code>X</code> <code>O</code>) on the board. I want you to be <em>able</em> to make illegal moves, like play over a square that is already played on.</p>
 <h3>Prevent illegal moves</h3>
 <p>We should validate or check each move before accepting it. That way if the square is not empty, then we’ll return a message to prompt the player to play again. This check method, what kind of type might it return? and how can we control the different outcomes i.e. a legal move vs an illegal move?</p>
+<p><figure><img src="https://user-images.githubusercontent.com/4499581/148246102-71d8797f-8607-42a1-9906-958bcdbb2706.png" alt="UML activity diagram"><figcaption></figcaption></figure></p>
+<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">checkMove</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> </span>{
+    <span class="hljs-keyword">return</span> (index &gt; -<span class="hljs-number">1</span> &amp;&amp; index &lt; <span class="hljs-number">10</span>) &amp;&amp; (board[index] != <span class="hljs-number">0</span> || board[index] != <span class="hljs-number">10</span>);
+}
+</code></pre>
+<p>🤔 Can you implement this control flow in your game?</p>
+<h3>Check for win</h3>
+<p>There are 8 different winning combinations for tic-tac-toe. For example the top row, the middle row, the bottom row, the left column the central column, etc. We can access a given combination using the Array indexes. For example, the left column indexes would be <code>[0, 3, 6]</code>.</p>
+<pre><code class="language-java">board[<span class="hljs-number">0</span>]
+board[<span class="hljs-number">3</span>]
+board[<span class="hljs-number">6</span>]
+</code></pre>
+<p>Each winning combo is a little array of 3 indexes, and all those combinations we can also store in an Array of the 8 combinations. That way we can leverage the built-in functionality of <code>forEach</code> to check over each combo to see if there is a winning combination on the board. To declare an Array within an Array you use a syntax like this:</p>
+<pre><code class="language-java"><span class="hljs-keyword">int</span>[][] combos = {
+  {<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>},
+  {<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>},
+  ....etc
+};
+
+combos[<span class="hljs-number">1</span>][<span class="hljs-number">2</span>] <span class="hljs-comment">// 5</span>
+</code></pre>
+<p>🧐 Can you have a go at this <code>haveWinner</code> method?</p>
+<h3>Check for a draw</h3>
+<p>There is not always a winner. It’s easy to draw a game. How will we know that the game is a draw? In your program what logical question can you ask of the board to see if there is a draw?</p>
+<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">haveDraw</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">boolean</span> draw = <span class="hljs-keyword">true</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> cell : board) {
+        <span class="hljs-keyword">if</span> (cell &gt; <span class="hljs-number">0</span> &amp;&amp; cell &lt; <span class="hljs-number">10</span>) {
+            draw = <span class="hljs-keyword">false</span>;
+            <span class="hljs-keyword">break</span>;
+        }
+    }
+    <span class="hljs-keyword">return</span> draw;
+}
+</code></pre>
+<p>In the method above we start with true - it’s a draw! Then we then use the forEach method to iterate over the Array checking that each cell is greater than 0 and less than 10 - basically are there any numbers between 1-9? If there are then is not a draw because there is a square that can be played on.</p>
+<h3>Game Over</h3>
+<p>Finally, we should be able to reach the end of a game. We will either have a draw or a win and if we have a win you should be able to display a message and congratulate the winner. Complete your tic-tac-toe game so you can play it, win it and draw it.</p>
+<p><iframe src="https://www.youtube.com/embed/1CtNo67wDng" width="100%" height="444px" allowfullscreen frameborder=0></iframe></p>
+<h2>Practice</h2>
+<p>There are lots of different ways to program this game. As you become more knowledgeable and confident you’ll be able to take some shortcuts and refine this program. Now you know the shape of the program or the story of this code can you write the game out for yourself with no references?</p>
+<h2>🧙‍♀️ For the Wizards</h2>
+<p>If you have enjoyed this workshop and you feel confident with the code you’ve written. How about making an AI you can play against? You’ll need to update your code so you can recursively play moves and store the results of each play. Then go research the <a href="https://youtu.be/trKjYdBASyQ">minimax</a> algorithm and see if you can implement it yourself.</p>
 
     <nav id="footer-nav"></nav>
     <script src="/learn-you-java/js/tabbed-code-blocks.js"></script>

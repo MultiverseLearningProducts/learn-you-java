@@ -2,6 +2,8 @@
 
 In this workshop, you are going to use all the things you have learned about Java code to write a computer program! Our program is going to accept input from the user, store and update the state, it will print out the state so the user can see it, and finally conclude with a win, lose or draw result. What you have studied so far are the primitives of Java, branching logic, and Arrays. These are like the words and phrases of a spoken language. When we write a computer program we combine all these building blocks and compose a story.
 
+!(https://www.youtube.com/embed/e6kwa56FrFU)
+
 ## Before you start
 This workshop assumes that you have read through the following sections from [Programviz](https://www.programiz.com/java-programming).
 * [Java Introduction](https://www.programiz.com/java-programming/hello-world)
@@ -138,3 +140,62 @@ Once the board is updated and the player has been toggled we want to return the 
 
 We should validate or check each move before accepting it. That way if the square is not empty, then we’ll return a message to prompt the player to play again. This check method, what kind of type might it return? and how can we control the different outcomes i.e. a legal move vs an illegal move?
 
+![UML activity diagram](https://user-images.githubusercontent.com/4499581/148246102-71d8797f-8607-42a1-9906-958bcdbb2706.png)
+
+```java
+private boolean checkMove (int index) {
+    return (index > -1 && index < 10) && (board[index] != 0 || board[index] != 10);
+}
+```
+🤔 Can you implement this control flow in your game?
+
+### Check for win
+
+There are 8 different winning combinations for tic-tac-toe. For example the top row, the middle row, the bottom row, the left column the central column, etc. We can access a given combination using the Array indexes. For example, the left column indexes would be `[0, 3, 6]`.
+```java
+board[0]
+board[3]
+board[6]
+```
+Each winning combo is a little array of 3 indexes, and all those combinations we can also store in an Array of the 8 combinations. That way we can leverage the built-in functionality of `forEach` to check over each combo to see if there is a winning combination on the board. To declare an Array within an Array you use a syntax like this:
+```java
+int[][] combos = {
+  {0,1,2},
+  {3,4,5},
+  ....etc
+};
+
+combos[1][2] // 5
+```
+🧐 Can you have a go at this `haveWinner` method?
+
+### Check for a draw
+
+There is not always a winner. It’s easy to draw a game. How will we know that the game is a draw? In your program what logical question can you ask of the board to see if there is a draw?
+```java
+private boolean haveDraw() {
+    boolean draw = true;
+    for (int cell : board) {
+        if (cell > 0 && cell < 10) {
+            draw = false;
+            break;
+        }
+    }
+    return draw;
+}
+```
+In the method above we start with true - it’s a draw! Then we then use the forEach method to iterate over the Array checking that each cell is greater than 0 and less than 10 - basically are there any numbers between 1-9? If there are then is not a draw because there is a square that can be played on.
+
+### Game Over
+
+Finally, we should be able to reach the end of a game. We will either have a draw or a win and if we have a win you should be able to display a message and congratulate the winner. Complete your tic-tac-toe game so you can play it, win it and draw it.
+
+!(https://www.youtube.com/embed/1CtNo67wDng)
+
+## Practice
+
+There are lots of different ways to program this game. As you become more knowledgeable and confident you’ll be able to take some shortcuts and refine this program. Now you know the shape of the program or the story of this code can you write the game out for yourself with no references?
+
+## 🧙‍♀️ For the Wizards
+
+If you have enjoyed this workshop and you feel confident with the code you’ve written. How about making an AI you can play against? You’ll need to update your code so you can recursively play moves and store the results of each play. Then go research the [minimax](https://youtu.be/trKjYdBASyQ) algorithm and see if you can implement it yourself.
