@@ -80,7 +80,7 @@ Our Array will only hold integers. So we could substitute the value X for intege
 private int player = 10;
 
 private void move(int index) {
-  board[index] = player
+  board[index] = player;
 }
 ```
 ## Output
@@ -191,7 +191,8 @@ In the method above we start with true - it’s a draw! Then we then use the for
 
 Finally, we should be able to reach the end of a game. We will either have a draw or a win and if we have a win you should be able to display a message and congratulate the winner. Complete your tic-tac-toe game so you can play it, win it and draw it.
 
-!(https://www.youtube.com/embed/1CtNo67wDng)
+<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;"> <iframe style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden" frameborder="0" type="text/html" src="https://www.dailymotion.com/embed/video/x86xgrk" width="100%" height="100%" allowfullscreen > </iframe> </div>
+
 
 ## Practice
 
