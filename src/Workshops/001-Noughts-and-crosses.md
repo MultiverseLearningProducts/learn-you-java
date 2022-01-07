@@ -177,7 +177,7 @@ There is not always a winner. It’s easy to draw a game. How will we know that 
 private boolean haveDraw() {
     boolean draw = true;
     for (int cell : board) {
-        if (cell > 0 && cell < 10) {
+        if (cell != 0 && cell != 10) {
             draw = false;
             break;
         }
