@@ -42,6 +42,7 @@ A room will have a room number. A room might be a Single, Twin or Double room, t
 ```java
 public class Room {
     public int number;
+    public String type = "Double";
     
     public Room(int number) {
         this.number = number;
@@ -50,7 +51,7 @@ public class Room {
 ```
 Very similar to our `Hotel` class. Can you also create a `Guest.java` with a `Guest` class that we can instantiate with a `String` surname.
 
-We have 3 objects. Finally in a `Main.java` class we can start to work with these objects in the OOP style!
+We can now make 3 types of object in a program. Finally in a `Main.java` class we can start to create these objects in the OOP style!
 ```java
 public class Main {
     public static void main(String[] flags) {
@@ -62,10 +63,9 @@ public class Main {
 ```
 
 ## Relating objects
+At present our hotel has only a name. We will want to create a hotel and say how many rooms it has. When we instantiate a new hotel it would be good if we could also passing the number of rooms that we like that hotel to have. It will be an integer. Can you update your code when you create a new hotel to also accept an integer that will represent the number of rooms we want a hotel to have.
 
-At present our hotel has only a name. We will want to create a hotel and say how many rooms it has. When we instantiate a new hotel that's also passing the number of rooms that we liked that hotel to have, It will be an integer can you update your code when you create a new hotel to also accept an integer that will represent the number of rooms we want a hotel to have.
-
-Now if you think about your data structures the best data structure to hold a list of rooms it's going to be an array, so we can use the number of rooms that the hotel needs to create an empty array and then we will iterate over it in a for loop and fill that array with rooms.
+Now if you think about your data structures, the best data structure to hold a list of rooms it's going to be an array, so we can use the number of rooms that the hotel needs to create an empty array and then we will iterate over it in a for loop and fill that array with rooms.
 ```java
 public class Hotel {
     public String name
@@ -75,7 +75,7 @@ public class Hotel {
         this.name = name;
         this.rooms = new Room[numOfRooms];
         for(int i = 0; i < numOfRooms; i++) {
-            this.rooms[i] = new Room();
+            this.rooms[i] = new Room(i + 1); // I'm using the index to be the room number
         }
     }
 }
@@ -83,7 +83,14 @@ public class Hotel {
 
 ## Debugging
 
-We should have a Hotel now with rooms, but how can we be sure? At present our code just runs and then exits. Let's use the debugger to inspect the objects in our code and verify that we do have a hotel with rooms in it.
+We should have a Hotel with rooms, but how can we be sure? At present our code just runs and then exits. To examine more closely what the state of our program is as it runs, and verify that values and variables are being set correctly we need to learn to debug our code.
+
+|Debugging|Admiral Grace Hopper|
+|:--------|:------------------:|
+_This is an odd term. Back in the early days of computing, computers were large constructions with physical valves and relays - they were bright warm and dusty things - very attractive to moths. The Mark II which was being built and run in Harvard University showed some unusual failing and faults. It got the engineering team curious as to what the problem was, upon closer investigation [Admiral Grace Hopper](https://en.wikipedia.org/wiki/Grace_Hopper) discovered a dead moth was blocking one of the relays. They went looking for other bugs and told the team leads they needed to "debug" the system!_|![Admiral Grace Hopper](https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Commodore_Grace_M._Hopper%2C_USN_%28covered%29.jpg/440px-Commodore_Grace_M._Hopper%2C_USN_%28covered%29.jpg)
+
+
+Let's use the debugger to inspect the objects in our code and verify that we do have a hotel with rooms in it.
 
 First create a breakpoint on the last line of the main method in your `Main.java` file after you declare and assign your Hotel. You can add a `System.out.println(hotel.name)` and add the breakpoint to that line.
 
@@ -120,5 +127,37 @@ public class Hotel {
     }
 }
 ```
-Now our hotel has a name, rooms, and a method that we can call with a guest. Our `checkIn` method needs to do the work of adding the guest into the first empty room it can find. Can you write this method?
+Now our hotel has a name, rooms, and a method that we can call with a guest. Our `checkIn` method needs to do the work of adding the guest into the first empty room it can find. Can you write this method? Think about how you might do that and the code that you might _want_ to write. For example as I iterate over all the rooms taking one room at a time I will want to ask each room,
 
+> Are you empty?
+
+That might look like:
+```java
+for(Room room : this.rooms) {
+    if (room.isEmpty()) {
+        //... more code in here
+    }
+}
+```
+This is another interface, but this time on the `Room` class. Here we are in the essential point of this workshop which is writing code were classes interact with one another. You will need to update your `Room` class as well at the `Hotel` class to complete the task of adding a guest to a room.
+
+📌 Remember the SOLID principles mentioned earlier? _Small simple interfaces_ in the _SOLID_ principles means **Interface segregation principle** it is the _I_ in SOLID and states.
+
+> A client should never be forced to implement an interface that it doesn’t use, or clients shouldn’t be forced to depend on methods they do not use.
+
+This principles encourages us to keep the public interface of a class as small and concise as possible. We need these interfaces of `checkIn` and `isEmpty` so let's update our classes to have these interfaces.
+
+```java
+public class Room {
+    public String number = "00";
+    private Guest[] beds = {null, null};
+
+    public Room() {
+        this.number = this.toString().substring(5,7);
+    }
+    public boolean isEmpty () {
+        // need logic to check room is empty
+    }
+}
+```
+Once we've found an empty room, we will need an interface to add the guest, and remove them when they check-out. 

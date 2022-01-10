@@ -160,13 +160,38 @@ board[6]
 ```
 Each winning combo is a little array of 3 indexes, and all those combinations we can also store in an Array of the 8 combinations. That way we can leverage the built-in functionality of `forEach` to check over each combo to see if there is a winning combination on the board. To declare an Array within an Array you use a syntax like this:
 ```java
-int[][] combos = {
-  {0,1,2},
-  {3,4,5},
-  ....etc
-};
+private boolean haveWinner() {
+    boolean win = false;
+    int[][] combos = {
+        {0,1,2},
+        {3,4,5},
+        {6,7,8},
+        {0,3,6},
+        {1,4,7},
+        {2,5,8},
+        {0,4,8},
+        {2,4,6}
+    };
+    for(int[] combo : combos) {
+        if (
+            board[combo[0]] == 0 
+        && board[combo[1]] == 0 
+        && board[combo[2]] == 0) {
+            win = true;
+            break;
+        } else if (
+            board[combo[0]] == 10 
+        && board[combo[1]] == 10 
+        && board[combo[2]] == 10) {
+            win = true;
+            break;
+        }
 
-combos[1][2] // 5
+    }
+    return win;
+}
+
+// combos[1][2] -> 5
 ```
 🧐 Can you have a go at this `haveWinner` method?
 

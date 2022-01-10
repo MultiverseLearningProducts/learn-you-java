@@ -154,13 +154,38 @@ board[<span class="hljs-number">3</span>]
 board[<span class="hljs-number">6</span>]
 </code></pre>
 <p>Each winning combo is a little array of 3 indexes, and all those combinations we can also store in an Array of the 8 combinations. That way we can leverage the built-in functionality of <code>forEach</code> to check over each combo to see if there is a winning combination on the board. To declare an Array within an Array you use a syntax like this:</p>
-<pre><code class="language-java"><span class="hljs-keyword">int</span>[][] combos = {
-  {<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>},
-  {<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>},
-  ....etc
-};
+<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">haveWinner</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">boolean</span> win = <span class="hljs-keyword">false</span>;
+    <span class="hljs-keyword">int</span>[][] combos = {
+        {<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>},
+        {<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>},
+        {<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>},
+        {<span class="hljs-number">0</span>,<span class="hljs-number">3</span>,<span class="hljs-number">6</span>},
+        {<span class="hljs-number">1</span>,<span class="hljs-number">4</span>,<span class="hljs-number">7</span>},
+        {<span class="hljs-number">2</span>,<span class="hljs-number">5</span>,<span class="hljs-number">8</span>},
+        {<span class="hljs-number">0</span>,<span class="hljs-number">4</span>,<span class="hljs-number">8</span>},
+        {<span class="hljs-number">2</span>,<span class="hljs-number">4</span>,<span class="hljs-number">6</span>}
+    };
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span>[] combo : combos) {
+        <span class="hljs-keyword">if</span> (
+            board[combo[<span class="hljs-number">0</span>]] == <span class="hljs-number">0</span> 
+        &amp;&amp; board[combo[<span class="hljs-number">1</span>]] == <span class="hljs-number">0</span> 
+        &amp;&amp; board[combo[<span class="hljs-number">2</span>]] == <span class="hljs-number">0</span>) {
+            win = <span class="hljs-keyword">true</span>;
+            <span class="hljs-keyword">break</span>;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (
+            board[combo[<span class="hljs-number">0</span>]] == <span class="hljs-number">10</span> 
+        &amp;&amp; board[combo[<span class="hljs-number">1</span>]] == <span class="hljs-number">10</span> 
+        &amp;&amp; board[combo[<span class="hljs-number">2</span>]] == <span class="hljs-number">10</span>) {
+            win = <span class="hljs-keyword">true</span>;
+            <span class="hljs-keyword">break</span>;
+        }
 
-combos[<span class="hljs-number">1</span>][<span class="hljs-number">2</span>] <span class="hljs-comment">// 5</span>
+    }
+    <span class="hljs-keyword">return</span> win;
+}
+
+<span class="hljs-comment">// combos[1][2] -&gt; 5</span>
 </code></pre>
 <p>🧐 Can you have a go at this <code>haveWinner</code> method?</p>
 <h3>Check for a draw</h3>
