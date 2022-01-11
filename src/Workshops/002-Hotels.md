@@ -1,7 +1,8 @@
 # Hotels
 Object orientated programming (OOP) is a style of programming. The Java language has been created to capture and express this style of programming. We need to learn about OOP in order to read and write Java code. There is a set of fundamental concepts that will get you started programming OOP you will learn these in this workshop. The main idea behind OOP is that our computer program should model how things are and how things relate to each other, like they do in the real world. For example we are going to build a hotel. Our hotel will have rooms and guests, just like hotels do in the real world.
 
-!(https://www.youtube.com/embed/UrGq7qSvtgI)
+<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;"> <iframe style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden" frameborder="0" type="text/html" src="https://www.dailymotion.com/embed/video/x870v97" width="100%" height="100%" allowfullscreen > </iframe> </div>
+
 
 ## new Hotel
 We are going to make a Hotel in Java. Our hotel can start off with a name. In a file called `Hotel.java` add the following public class.
