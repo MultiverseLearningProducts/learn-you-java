@@ -1,5 +1,5 @@
 # Hotels
-Object orientated programming (OOP) is a style of programming. The Java language has been created to capture and express this style of programming. We need to learn about OOP in order to read and write Java code. There are a set of core concepts and values that you need to know about to start writing Java code like a pro. The main idea behind OOP is that our computer program should model how things are and how things relate to each other in the real world. For example today we are going to build a hotel. Our hotel will have rooms and guests and a location, just like hotels do in the real world.
+Object orientated programming (OOP) is a style of programming. The Java language has been created to capture and express this style of programming. We need to learn about OOP in order to read and write Java code. There are a set of core concepts that you need to know about to start writing Java code like a boss. The main idea behind OOP is that our computer program should model how things are and how things relate to each other in the real world. For example today we are going to build a hotel. Our hotel will have rooms and guests, just like hotels do in the real world.
 
 !(https://www.youtube.com/embed/UrGq7qSvtgI)
 
@@ -22,7 +22,9 @@ When you see the `new` keyword you know that you are creating a new instance of 
 ```java
 grand.name // "The Grand"
 ```
-This object in our code is going to represent our real world hotel. Our hotel has a name, it will also need rooms for our guests.
+|representation|real world object|
+|:--|:--|
+This object in our code `Hotel@182decdb` is going to represent our real world hotel.|![the Grand Hotel](https://images.trvl-media.com/hotels/1000000/50000/45700/45673/385e0d93.jpg?)
 
 ## OOP Design
 When you are thinking about the design of an object orientated program there are some principles of good practice that you should know about.
@@ -33,9 +35,7 @@ When you are thinking about the design of an object orientated program there are
 1. Small simple interfaces
 1. Backwards compatibility
 
-This is a simplified version of the [SOLID principles](https://www.digitalocean.com/community/conceptual_articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design).
-
-Our Hotel's single responsibility is to have rooms available. The Room's single responsibility is to hold upto 2 guests. The Guests responsibility is to have a surname. So to practice this we should make a new class from which we can create the rooms for our hotel.
+This is a simplified version of the [SOLID principles](https://www.digitalocean.com/community/conceptual_articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design). To practice the principle of single responsibility we should think about different objects owning different properties. For example instead of the Hotel class having all the properties and methods for each room defined within it we should make a new different class definition for a room, then add instances of the `Room` class to the `Hotel` instance. 
 
 ## new Room
 A room will have a room number. A room might be a Single, Twin or Double room, those different rooms will have different rates, and we'll want to check and see if the room is available or not. Finally we want to be able to place guests into the room. In a new file called `Room.java` can you create the following class definition.
@@ -49,9 +49,9 @@ public class Room {
     }
 }
 ```
-Very similar to our `Hotel` class. Can you also create a `Guest.java` with a `Guest` class that we can instantiate with a `String` surname.
+Very similar to our `Hotel` class. Can you also create a `Guest.java` with a `Guest` class that we can instantiate with a `String` that will have the property surname.
 
-We can now make 3 types of object in a program. Finally in a `Main.java` class we can start to create these objects in the OOP style!
+We can now make 3 types of object in our program. Finally in a `Main.java` class we can start to create these objects in the OOP style!
 ```java
 public class Main {
     public static void main(String[] flags) {
@@ -65,17 +65,17 @@ public class Main {
 ## Relating objects
 At present our hotel has only a name. We will want to create a hotel and say how many rooms it has. When we instantiate a new hotel it would be good if we could also passing the number of rooms that we like that hotel to have. It will be an integer. Can you update your code when you create a new hotel to also accept an integer that will represent the number of rooms we want a hotel to have.
 
-Now if you think about your data structures, the best data structure to hold a list of rooms it's going to be an array, so we can use the number of rooms that the hotel needs to create an empty array and then we will iterate over it in a for loop and fill that array with rooms.
+Now if you think about your data structures, the best data structure to hold an array of rooms it's going to be an Array! We can use the number of rooms that the hotel needs to create an empty array and then we will iterate over it in a for loop and fill that array with rooms.
 ```java
 public class Hotel {
-    public String name
+    public String name;
     private Room[] rooms;
 
     public Hotel(String name, int numOfRooms) {
         this.name = name;
         this.rooms = new Room[numOfRooms];
         for(int i = 0; i < numOfRooms; i++) {
-            this.rooms[i] = new Room(i + 1); // I'm using the index to be the room number
+            this.rooms[i] = new Room(i + 10); // I'm using the index to create room numbers
         }
     }
 }
@@ -83,7 +83,7 @@ public class Hotel {
 
 ## Debugging
 
-We should have a Hotel with rooms, but how can we be sure? At present our code just runs and then exits. To examine more closely what the state of our program is as it runs, and verify that values and variables are being set correctly we need to learn to debug our code.
+We should have a Hotel with rooms, but how can we be sure? At present our code just runs prints out the hotel name and then exits. To examine more closely what the state of our program is as it runs, and verify that values and variables are being set correctly we need to learn to debug our code.
 
 |Debugging|Admiral Grace Hopper|
 |:--------|:------------------:|
@@ -98,17 +98,23 @@ _you might need to goto: vscode->settings->features->debug->__Allow Breakpoints 
 
 ![adding a breakpoint](https://user-images.githubusercontent.com/4499581/148397894-e65070c3-73b0-4ede-a6a2-b6eb5ad3cad4.png)
 
-Can you see the red dot that I added to the left of the line numbers? That is a breakpoint. When we run our program in debug mode the program will stop there are we will be able to inspect our hotel. Try clicking on 'debug' instead of 'run' to start a debugging session.
+Can you see the red dot that I added to the left of the line numbers? That is a breakpoint. When we run our program in debug mode the program will stop there. Then we will be able to inspect our hotel. Try clicking on 'debug' instead of 'run' to start a debugging session.
 
 ![annotated debugging screen](https://user-images.githubusercontent.com/4499581/148399443-a471f985-7560-4284-a50a-a09101af0bf7.jpg)
 
-Take a moment to orientate yourself and inspect your hotel object. Our code is paused at the breakpoint, so what comes after the breakpoint has not yet been executed. While we are paused here we can look around in our program, inspect the local variables, and even interact with our code by writing expressions in the 'DEBUG CONSOLE' tab. Pretty amazing, very useful...
+Take a moment to orientate yourself and inspect your hotel object. Our code is paused at the breakpoint, so what comes after the breakpoint has not yet been executed. While we are paused here we can look around in our program, inspect the local variables, and even interact with our code by writing expressions in the 'DEBUG CONSOLE' tab. Pretty amazing and very useful.
 
 You can also see you have a set of controls, like pause/play, step over, step into etc. These control the execution of your program, so you can step over a function, or into it and move through your program step by step, following the path of execution.
 
 ## Interfaces and interactions
 
-We have a hotel with rooms for guests. Now we want to be able to place a guest in a room. To do this our objects will interact. Usually when a guest arrives at the hotel they check-in and the hotel assign them their room. So it makes sense for the hotel to take responsibility for placing a guest in a room. At present our hotel has no way for us to check-in a guest. What we need to do is build out the Hotel's interface by adding a method.
+![Interfaces and interactions](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Plug_types_2.svg/1353px-Plug_types_2.svg.png "creative commons license: This file is from the Open Clip Art Library, which released it explicitly into the public domain (see here). Original URL: https://openclipart.org/detail/296158/all-plug-types the image has not been altered")
+
+What type of plug sockets did you grow up with? Can you see it in the picture above? In the next section we are going to introduce the idea of interfaces. An interface is made up of the properties and methods a class exposes publicly to other parts of a program or network. It is by implementing interfaces that we are going to be able to have our classes interact with each other. In the illustrations above you can see the different types of socket interfaces that expose electricity to us. If we have the right plug we can access electricity through the socket.
+
+### Adding methods
+
+We have a hotel with rooms for guests. Now we want to be able to plug a guest into a room. To do this our objects will interact. Usually when a guest arrives at the hotel they check-in and the hotel assign them their room. It makes sense for the hotel to take responsibility for placing a guest in a room. At present our hotel has no way for us to check-in a guest. What we need to do is build out the Hotel's interface by adding a method.
 ```java
 public class Hotel {
     public String name;
@@ -118,12 +124,12 @@ public class Hotel {
         this.name = name;
         this.rooms = new Room[numOfRooms];
         for(int i = 0; i < numOfRooms; i++) {
-            this.rooms[i] = new Room();
+            this.rooms[i] = new Room(i);
         }
     }
 
-    public int checkIn(Guest guest) {
-        return 0;
+    public void checkIn(Guest guest) {
+        // ...
     }
 }
 ```
@@ -141,23 +147,188 @@ for(Room room : this.rooms) {
 ```
 This is another interface, but this time on the `Room` class. Here we are in the essential point of this workshop which is writing code were classes interact with one another. You will need to update your `Room` class as well at the `Hotel` class to complete the task of adding a guest to a room.
 
-📌 Remember the SOLID principles mentioned earlier? _Small simple interfaces_ in the _SOLID_ principles means **Interface segregation principle** it is the _I_ in SOLID and states.
+📌 Remember the SOLID principles mentioned earlier? _Small simple interfaces_ in the _SOLID_ principles is called **Interface segregation principle** it is the **I** in S.O.L.**I**.D. principles.
 
 > A client should never be forced to implement an interface that it doesn’t use, or clients shouldn’t be forced to depend on methods they do not use.
 
-This principles encourages us to keep the public interface of a class as small and concise as possible. We need these interfaces of `checkIn` and `isEmpty` so let's update our classes to have these interfaces.
+This principles encourages us to keep the public interface of a class as small and concise as possible. We need these interfaces of `checkIn` and `isEmpty` so let's update our classes to have these interfaces and make sure there is somewhere cosy for our guests to sleep!
 
 ```java
 public class Room {
-    public String number = "00";
+    public int number;
+    public String type = "Double";
     private Guest[] beds = {null, null};
 
-    public Room() {
-        this.number = this.toString().substring(5,7);
+    public Room(int roomNumber) {
+        this.number = roomNumber;
     }
+
     public boolean isEmpty () {
         // need logic to check room is empty
     }
 }
 ```
-Once we've found an empty room, we will need an interface to add the guest, and remove them when they check-out. 
+Once we've found an empty room, we will need an interface to add a guest, and remove them when they check-out. Your `Room` class might end up looking something like this.
+```java
+import java.util.Arrays;
+
+public class Room {
+    public int number;
+    public String type = "Double";
+    private Guest[] beds = {null, null};
+
+    public Room(int roomNumber) {
+        this.number = roomNumber;
+    }
+
+    public boolean isEmpty () {
+        return Arrays.asList(this.beds).contains(null);
+    }
+
+    public void addGuest(Guest guest) {
+        if (this.beds[0] == null) {
+            this.beds[0] = guest;
+        } else if (this.beds[1] == null) {
+            this.beds[1] = guest;
+        }
+    }
+
+    public Guest removeGuest() {
+        if (this.beds[1] != null) {
+            Guest guest = this.beds[1];
+            this.beds[1] = null;
+            return guest;
+        } else {
+            Guest guest = this.beds[0];
+            this.beds[0] = null;
+            return guest;
+        }        
+    }
+}
+```
+Now objects in our code can interact, and we can relate them together. You should now be able to create a guest, and place them into a hotel room!
+
+## Inheritance
+
+Inheritance is a central design concept in OOP. It is a mechanism for sharing code and organising objects. What follows is an example of implementing inheritance and leveraging the design pattern to save us from repeatedly having to write code that basically does the same thing.
+
+Hotels have different room types. For example a double room, a single, a twin or family room. They are all rooms, they will all have a room number, they all need the interface to allow us to add and remove guests. However they diverge. A single room will only accept 1 guest then it will be full. The different types of room will all have their own prices.
+
+There are 4 new keywords you are going to learn to get the hang of inheritance in Java.
+
+1. `extends` - extend a class
+1. `super` - access the extended class [parent class, base class]
+1. `abstract class` - a class that you never actually instantiate in your code
+1. `@Overide` - overwrite an inherited method
+
+### Extend a class
+
+Instead of relying on the `String` "Double" to indicate that a room is a double room, we should actually have a `DoubleRoom` class that represents this type of room. We are going to treat the `Room` class as the abstracted generic blueprint of all rooms. We can make a "Double" room really easily.
+
+```java
+public class DoubleRoom extends Room {
+    public DoubleRoom(int roomNumber) {
+        super(roomNumber);
+    }
+}
+```
+Can you see the `extends` keyword when we define the class? Can you see where we use `super` to pass the room number to the `Room` constructor. What does it mean to inherit or extend the `Room` class? It means you can do things like this.
+```java
+DoubleRoom room13 = new DoubleRoom(13);
+
+room13.number; // 13
+room13 instanceof DoubleRoom; // true
+room13.addGuest(new Guest("Robinson"));
+room13.isEmpty(); // false
+```
+Rad. We got methods for free! We inherited the functionality of the `Room` class. `DoubleRoom` can be refereed to as a "sub-class" or "child class" of the "parent class" or "base class" `Room`. We still need to expose a constructor for our sub-class `DoubleRoom` but we can immediately pass the value up to the parent class `Room` to do the work of assigning the value to the property `number`. We can make the other types of rooms using inheritance.
+```java
+public class DoubleRoom extends Room {
+    private double price = 79.99;
+    
+    public DoubleRoom(int roomNumber) {
+        super(roomNumber);
+    }
+}
+
+public class SingleRoom extends Room {
+    private double price = 59.99;
+
+    public SingleRoom(int roomNumber) {
+        super(roomNumber);
+    }
+}
+
+public class TwinRoom extends Room {
+    private double price = 69.99;
+
+    public TwinRoom(int roomNumber) {
+        super(roomNumber);
+    }
+}
+```
+
+### Create an Abstract class
+
+We will never instantiate the `Room` class. We are never going to write the code `new Room(13);` so to express that in our code we can label the `Room` class as an `abstract` class. Adding this means we can no longer instantiate this class, trying to will cause a syntax error `Cannot instantiate the type Room`. BUT we can use this abstract class as a basis for spawning other sub classes. 
+```java
+public abstract class Room {
+    // class definition...
+}
+```
+
+### @Override an inherited method
+
+Our abstract class holds the shared properties and methods that all our room types share. But what if we need to alter the behavior of one sub-class? For example to check if a single room is empty we only need to check for 1 guest. Using `@Overide` we can basically overwrite the inherited method and alter its behaviour.
+
+```java
+public class SingleRoom extends Room {
+    public String type = "Single";
+    private double price = 59.99;
+
+    public SingleRoom(int roomNumber) {
+        super(roomNumber);
+    }
+
+    @Overide
+    public boolean isEmpty () {
+        return this.beds[0] == null;
+    }
+}
+```
+We are going to bump into a problem here when we try to access `this.beds`. We rightly made this private as beds are only for the the guests in the `Room` class. Private means no other class can read or write to that property. But we made `Room` an abstract class. No guests will every use the `Room` class. So its ok to share `this.beds` - but only with the sub-classes that inherit from `Room`. To achieve this we need to use `protected` in the `Room` class when we define the beds property.
+```java
+public abstract class Room {
+    // ...
+    protected Guest[] beds = {null, null}; // 'protected' means only sub-classes can read/write to this property
+    // ...
+}
+```
+
+## Build your Hotel
+
+We have looked at.
+
+* Classes
+* Debugging
+* Interfaces
+* Inheritance
+
+These topics are fundamental when working with Java. Your challenge now is to use all these ideas together and create a working Hotel in code. You will need to try and meet the following requirements.
+
+1. Your Hotel needs to have different types of rooms:
+    - use `extends` to implement inheritance
+    - use the `abstract` keyword correctly
+    - use `super` in the sub-classes
+    - use `@Override` to alter some inherited methods
+1. Guests need to be able to choose which type of room they would like to be in
+    - create an interface that will enable you to place a guest in a single room rather than a double or twin
+1. Only Guests checking in with the same surname can share a double room (I know - very old fashioned!)
+    - how could you implement this rule just for double rooms
+1. You should be able to check guests out of their rooms
+
+We've used only 1 breakpoint so far. What you can do it create your objects in your main method. Then add guests into rooms, then set a breakpoint to inspect the updated state of your Hotel. Then you can check out your guests or add some more activity then set another breakpoint to examine the altered state of your Hotel. Life is never dull in the Grand Hotel.
+
+## 🧙‍♀️ For the Wizards
+
+How could you generate a bill for your guests upon checkout? We have not considered in our Hotel how we will deal with the passage of time? For example some guests might like to stay for just one night, other might like to stay for the week.
