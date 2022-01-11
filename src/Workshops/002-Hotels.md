@@ -23,9 +23,9 @@ When you see the `new` keyword you know that you are creating a new instance of 
 ```java
 grand.name // "The Grand"
 ```
-|OOP representation of a Hotel|A real world Hotel|
+|OOP Hotel|A real world Hotel|
 |:--|:--|
-This object in our code `Hotel@182decdb` is going to represent our real world hotel.|![the Grand Hotel](https://images.trvl-media.com/hotels/1000000/50000/45700/45673/385e0d93.jpg?)
+<span style="display:inline-block;vertical-align:middle;">`Hotel@182decdb`</span>|![the Grand Hotel](https://images.trvl-media.com/hotels/1000000/50000/45700/45673/385e0d93.jpg?)
 
 ## OOP Design
 When you are thinking about the design of an object orientated program there are some principles of good practice that you should know about.
