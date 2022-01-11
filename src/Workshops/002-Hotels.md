@@ -25,7 +25,7 @@ grand.name // "The Grand"
 ```
 |OOP Hotel|A real world Hotel|
 |:--|:--|
-<span style="display:inline-block;vertical-align:middle;">`Hotel@182decdb`</span>|![the Grand Hotel](https://images.trvl-media.com/hotels/1000000/50000/45700/45673/385e0d93.jpg?)
+<span style="display:flex;align-items:center;height:279px;">`Hotel@182decdb`</span>|![the Grand Hotel](https://images.trvl-media.com/hotels/1000000/50000/45700/45673/385e0d93.jpg?)
 
 ## OOP Design
 When you are thinking about the design of an object orientated program there are some principles of good practice that you should know about.
