@@ -288,52 +288,82 @@ room13.isEmpty(); <span class="hljs-comment">// false</span>
     }
 }
 </code></pre>
-<p>Can you see we are repeating code in our sub-classes? The price property will be shared by all sub-classes of <code>Room</code>. It makes sense for this property to belong to the parent/base/super class. However we will want the sub-classes to set this price when they are instantiated. So we want a method that <em>only</em> sub-classes can call to set the price. To do this we will use the <code>protected</code> permission level on the <code>setPrice</code> method we are adding to the base class. That means only sub-classes can call this 'setter' method.</p>
+<p>Can you see we are repeating code in our sub-classes? The price property will be shared by all sub-classes of <code>Room</code>. It makes sense for this property to belong to the parent/base/super class. We will want the sub-classes to set this price when they are instantiated. So we want a method that we can call to set the price for that room.</p>
 <pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Room</span> </span>{
     <span class="hljs-keyword">private</span> <span class="hljs-keyword">double</span> price;
     <span class="hljs-comment">//... other properties and methods</span>
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setPrice</span><span class="hljs-params">(<span class="hljs-keyword">double</span> price)</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setPrice</span><span class="hljs-params">(<span class="hljs-keyword">double</span> price)</span> </span>{ <span class="hljs-comment">// not private, but not as open as public, protected restricts access to the package level</span>
         <span class="hljs-keyword">this</span>.price = price;
     }
 }
 </code></pre>
+<p>In our sub-class in the constructor method we can set the price depending on the room type.</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DoubleRoom</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Room</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">DoubleRoom</span><span class="hljs-params">(<span class="hljs-keyword">int</span> roomNumber)</span> </span>{
+        <span class="hljs-keyword">super</span>(roomNumber);
+        <span class="hljs-keyword">super</span>.setPrice(<span class="hljs-number">79.00</span>);
+    }
+}
+</code></pre>
 <h3>Create an Abstract class</h3>
-<p>We will never instantiate the <code>Room</code> class. We are never going to write the code <code>new Room(13);</code> so to express that in our code we can label the <code>Room</code> class as an <code>abstract</code> class. Adding this means we can no longer instantiate this class, trying to will cause a syntax error <code>Cannot instantiate the type Room</code>. BUT we can use this abstract class as a basis for spawning other sub classes.</p>
-<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Room</span> </span>{
+<p>We will never instantiate the <code>Room</code> class. We are never going to write the code <code>new Room(13);</code>. To express that in our code we can label the <code>Room</code> class an <code>abstract</code> class. Adding this means we can no longer instantiate this class, trying to will cause a syntax error <code>Cannot instantiate the type Room</code>. BUT we can use this abstract class as a basis for spawning other sub classes.</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hotel</span> </span>{
     <span class="hljs-comment">// class definition...</span>
 }
 </code></pre>
 <h3>@Override an inherited method</h3>
 <p>Our abstract class holds the shared properties and methods that all our room types share. But what if we need to alter the behavior of one sub-class? For example to check if a single room is empty we only need to check for 1 guest. Using <code>@Overide</code> we can basically overwrite the inherited method and alter its behaviour.</p>
 <pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SingleRoom</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Room</span> </span>{
-    <span class="hljs-keyword">public</span> String type = <span class="hljs-string">&quot;Single&quot;</span>;
-    <span class="hljs-keyword">private</span> <span class="hljs-keyword">double</span> price = <span class="hljs-number">59.99</span>;
-
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">SingleRoom</span><span class="hljs-params">(<span class="hljs-keyword">int</span> roomNumber)</span> </span>{
         <span class="hljs-keyword">super</span>(roomNumber);
+        <span class="hljs-keyword">super</span>.setPrice(<span class="hljs-number">59.99</span>);
     }
 
-    <span class="hljs-meta">@Overide</span>
+    <span class="hljs-meta">@Override</span>
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isEmpty</span> <span class="hljs-params">()</span> </span>{
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.beds[<span class="hljs-number">0</span>] == <span class="hljs-keyword">null</span>;
     }
 }
 </code></pre>
-<p>We are going to bump into a problem here when we try to access <code>this.beds</code>. We rightly made this private as beds are only for the the guests in the <code>Room</code> class. Private means no other class can read or write to that property. But we made <code>Room</code> an abstract class. No guests will every use the <code>Room</code> class. So its ok to share <code>this.beds</code> - but only with the sub-classes that inherit from <code>Room</code>. To achieve this we need to use <code>protected</code> in the <code>Room</code> class when we define the beds property.</p>
+<p>We are going to bump into a problem here when we try to access <code>this.beds</code>. We rightly made this private as beds are only for the the guests in the <code>Room</code> class. Private means no other class can read or write to that property. But we made <code>Room</code> an abstract class. No guests will every use the <code>Room</code> class. So its ok to share <code>this.beds</code> - but only with the sub-classes and classes in our package. To achieve this we need to use <code>protected</code> in the <code>Room</code> class when we define the beds property.</p>
 <pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Room</span> </span>{
     <span class="hljs-comment">// ...</span>
-    <span class="hljs-keyword">protected</span> Guest[] beds = {<span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>}; <span class="hljs-comment">// &#x27;protected&#x27; means only sub-classes can read/write to this property</span>
+    <span class="hljs-keyword">protected</span> Guest[] beds = {<span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>}; <span class="hljs-comment">// &#x27;protected&#x27; means sub-classes or other classes in the package scope can read/write to this property</span>
     <span class="hljs-comment">// ...</span>
 }
 </code></pre>
+<h3>Polymorphism</h3>
+<p>In our Hotel there are lots of different types of <code>Room</code>.</p>
+<ol>
+<li><code>DoubleRoom</code></li>
+<li><code>TwinRoom</code></li>
+<li><code>SingleRoom</code></li>
+</ol>
+<p>3 different classes. How will we be able to store them all in one array? We know that in Java we can't mix different types in an array. This is where <strong>polymorphism</strong> starts to come into play. Because of <strong>polymorphism</strong> we can mix different types of sub classes in one polymorphic array.</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hotel</span> </span>{
+    <span class="hljs-keyword">private</span> Room[] rooms = {
+        <span class="hljs-keyword">new</span> SingleRoom(<span class="hljs-number">1</span>),
+        <span class="hljs-keyword">new</span> DoubleRoom(<span class="hljs-number">2</span>),
+        <span class="hljs-keyword">new</span> DoubleRoom(<span class="hljs-number">3</span>),
+        <span class="hljs-keyword">new</span> TwinRoom(<span class="hljs-number">4</span>)
+    };
+}
+</code></pre>
+<p>Above we use the parent class or super class <code>Room</code> as the <em>type</em> for the array. We have an array of Room's. When we iterate over the array we can use the super class as the type, and know with confidence that each instance that we loop over will respond correctly to the same method calls.</p>
+<pre><code class="language-java"><span class="hljs-keyword">for</span>(Room room : <span class="hljs-keyword">this</span>.rooms) {
+    <span class="hljs-keyword">if</span> (room.isEmpty()) 
+}
+</code></pre>
+<p>If we added another type of <code>Room</code> for example a <code>FamilyRoom</code> <strong>polymorphism</strong> enables us to do that without having to update code else where. We know that the <code>FamilyRoom</code> will respond to <code>isEmpty</code>, <code>addGuest</code>, <code>getNumber</code> etc. Open for extension, closed for modification. This patten of inheritance and the way polymorphism allows us to treat a super class <em>type</em> as a substitute for a sub-class type helps us extend Java code without breaking code that has already been written.</p>
 <h2>Build your Hotel</h2>
-<p>We have looked at.</p>
+<p>We have looked at:</p>
 <ul>
 <li>Classes</li>
 <li>Debugging</li>
-<li>Interfaces</li>
+<li>Encapsulation</li>
 <li>Inheritance</li>
+<li>Polymorphism</li>
 </ul>
 <p>These topics are fundamental when working with Java. Your challenge now is to use all these ideas together and create a working Hotel in code. You will need to try and meet the following requirements.</p>
 <ol>
@@ -346,7 +376,7 @@ room13.isEmpty(); <span class="hljs-comment">// false</span>
 </ul></li>
 <li>Guests need to be able to choose which type of room they would like to be in
 <ul>
-<li>create an interface that will enable you to place a guest in a single room rather than a double or twin</li>
+<li>figure a way to place a guest in a single room rather than a double or twin room</li>
 </ul></li>
 <li>Only Guests checking in with the same surname can share a double room (I know - very old fashioned!)
 <ul>

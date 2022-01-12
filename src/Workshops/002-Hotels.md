@@ -301,23 +301,32 @@ public class TwinRoom extends Room {
     }
 }
 ```
-Can you see we are repeating code in our sub-classes? The price property will be shared by all sub-classes of `Room`. It makes sense for this property to belong to the parent/base/super class. However we will want the sub-classes to set this price when they are instantiated. So we want a method that _only_ sub-classes can call to set the price. To do this we will use the `protected` permission level on the `setPrice` method we are adding to the base class. That means only sub-classes can call this 'setter' method.
+Can you see we are repeating code in our sub-classes? The price property will be shared by all sub-classes of `Room`. It makes sense for this property to belong to the parent/base/super class. We will want the sub-classes to set this price when they are instantiated. So we want a method that we can call to set the price for that room.
 ```java
 public class Room {
     private double price;
     //... other properties and methods
 
-    protected void setPrice(double price) {
+    protected void setPrice(double price) { // not private, but not as open as public, protected restricts access to the package level
         this.price = price;
+    }
+}
+```
+In our sub-class in the constructor method we can set the price depending on the room type.
+```java
+public class DoubleRoom extends Room {
+    public DoubleRoom(int roomNumber) {
+        super(roomNumber);
+        super.setPrice(79.00);
     }
 }
 ```
 
 ### Create an Abstract class
 
-We will never instantiate the `Room` class. We are never going to write the code `new Room(13);` so to express that in our code we can label the `Room` class as an `abstract` class. Adding this means we can no longer instantiate this class, trying to will cause a syntax error `Cannot instantiate the type Room`. BUT we can use this abstract class as a basis for spawning other sub classes. 
+We will never instantiate the `Room` class. We are never going to write the code `new Room(13);`. To express that in our code we can label the `Room` class an `abstract` class. Adding this means we can no longer instantiate this class, trying to will cause a syntax error `Cannot instantiate the type Room`. BUT we can use this abstract class as a basis for spawning other sub classes. 
 ```java
-public abstract class Room {
+public class Hotel {
     // class definition...
 }
 ```
@@ -328,36 +337,62 @@ Our abstract class holds the shared properties and methods that all our room typ
 
 ```java
 public class SingleRoom extends Room {
-    public String type = "Single";
-    private double price = 59.99;
-
     public SingleRoom(int roomNumber) {
         super(roomNumber);
+        super.setPrice(59.99);
     }
 
-    @Overide
+    @Override
     public boolean isEmpty () {
         return this.beds[0] == null;
     }
 }
 ```
-We are going to bump into a problem here when we try to access `this.beds`. We rightly made this private as beds are only for the the guests in the `Room` class. Private means no other class can read or write to that property. But we made `Room` an abstract class. No guests will every use the `Room` class. So its ok to share `this.beds` - but only with the sub-classes that inherit from `Room`. To achieve this we need to use `protected` in the `Room` class when we define the beds property.
+We are going to bump into a problem here when we try to access `this.beds`. We rightly made this private as beds are only for the the guests in the `Room` class. Private means no other class can read or write to that property. But we made `Room` an abstract class. No guests will every use the `Room` class. So its ok to share `this.beds` - but only with the sub-classes and classes in our package. To achieve this we need to use `protected` in the `Room` class when we define the beds property.
 ```java
 public abstract class Room {
     // ...
-    protected Guest[] beds = {null, null}; // 'protected' means only sub-classes can read/write to this property
+    protected Guest[] beds = {null, null}; // 'protected' means sub-classes or other classes in the package scope can read/write to this property
     // ...
 }
 ```
 
+### Polymorphism
+
+In our Hotel there are lots of different types of `Room`.
+
+1. `DoubleRoom`
+1. `TwinRoom`
+1. `SingleRoom`
+
+3 different classes. How will we be able to store them all in one array? We know that in Java we can't mix different types in an array. This is where **polymorphism** starts to come into play. Because of **polymorphism** we can mix different types of sub classes in one polymorphic array.
+```java
+public class Hotel {
+    private Room[] rooms = {
+        new SingleRoom(1),
+        new DoubleRoom(2),
+        new DoubleRoom(3),
+        new TwinRoom(4)
+    };
+}
+```
+Above we use the parent class or super class `Room` as the _type_ for the array. We have an array of Room's. When we iterate over the array we can use the super class as the type, and know with confidence that each instance that we loop over will respond correctly to the same method calls.
+```java
+for(Room room : this.rooms) {
+    if (room.isEmpty()) 
+}
+```
+If we added another type of `Room` for example a `FamilyRoom` **polymorphism** enables us to do that without having to update code else where. We know that the `FamilyRoom` will respond to `isEmpty`, `addGuest`, `getNumber` etc. Open for extension, closed for modification. This patten of inheritance and the way polymorphism allows us to treat a super class _type_ as a substitute for a sub-class type helps us extend Java code without breaking code that has already been written.
+
 ## Build your Hotel
 
-We have looked at.
+We have looked at:
 
 * Classes
 * Debugging
-* Interfaces
+* Encapsulation
 * Inheritance
+* Polymorphism
 
 These topics are fundamental when working with Java. Your challenge now is to use all these ideas together and create a working Hotel in code. You will need to try and meet the following requirements.
 
@@ -367,7 +402,7 @@ These topics are fundamental when working with Java. Your challenge now is to us
     - use `super` in the sub-classes
     - use `@Override` to alter some inherited methods
 1. Guests need to be able to choose which type of room they would like to be in
-    - create an interface that will enable you to place a guest in a single room rather than a double or twin
+    - figure a way to place a guest in a single room rather than a double or twin room
 1. Only Guests checking in with the same surname can share a double room (I know - very old fashioned!)
     - how could you implement this rule just for double rooms
 1. You should be able to check guests out of their rooms

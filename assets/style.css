@@ -136,6 +136,9 @@ h1::after {
 hr {
   border: solid 1px var(--mv-gray);
 }
+figure {
+  position: relative;
+}
 figcaption {
   font-size: 0.5rem;
 }
@@ -143,7 +146,13 @@ figcaption::before {
   content: ' ';
   background-image: url('/learn-you-java/images/cc.logo.svg');
   background-size: contain;
+  background-repeat: no-repeat;
   height: 1rem;
+  width: 2rem;
+  position: absolute;
+  left: -1.25rem;
+  bottom: 3.25rem;
+  transform: rotate(270deg);
 }
 .tabbed-code-block nav {
   display: flex;
