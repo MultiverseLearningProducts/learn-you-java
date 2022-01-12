@@ -140,7 +140,9 @@ figcaption {
   font-size: 0.5rem;
 }
 figcaption::before {
-  content: '/learn-you-java/images/cc.logo.svg';
+  content: ' ';
+  background-image: url('/learn-you-java/images/cc.logo.svg');
+  background-size: contain;
   height: 1rem;
 }
 .tabbed-code-block nav {

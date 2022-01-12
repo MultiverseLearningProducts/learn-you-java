@@ -245,7 +245,7 @@ Now objects in our code can interact, and we can relate them together. You shoul
 
 Inheritance is a central design concept in OOP. It is a mechanism for sharing code and organising objects. What follows is an example of implementing inheritance and leveraging the design pattern to save us from repeatedly having to write code that basically does the same thing.
 
-Hotels have different room types. For example a double room, a single, a twin or family room. They are all rooms, they will all have a room number, they all need the interface to allow us to add and remove guests. However they diverge. A single room will only accept 1 guest then it will be full. The different types of room will all have their own prices.
+Hotels have different room types. For example a double room, a single, a twin or family room. They are all rooms, they will all have a room number, they all need the interface to allow us to add and remove guests. However they diverge. A single room will only accept 1 guest then it will not be empty. Each room type will have their own prices.
 
 There are 4 new keywords you are going to learn to get the hang of inheritance in Java.
 
@@ -256,7 +256,7 @@ There are 4 new keywords you are going to learn to get the hang of inheritance i
 
 ### Extend a class
 
-Instead of relying on the `String` "Double" to indicate that a room is a double room, we should actually have a `DoubleRoom` class that represents this type of room. We are going to treat the `Room` class as the abstracted generic blueprint of all rooms. We can make a "Double" room really easily.
+Instead of relying on the `String` "Double" to indicate that a room is a double room, we should actually have a `DoubleRoom` class that represents this type of room. We are going to treat the `Room` class as the abstract blueprint of all rooms. We can make a "Double" room really easily.
 
 ```java
 public class DoubleRoom extends Room {
@@ -269,13 +269,13 @@ Can you see the `extends` keyword when we define the class? Can you see where we
 ```java
 DoubleRoom room13 = new DoubleRoom(13);
 
-room13.number; // 13
+room13.getNumber(); // 13
 room13 instanceof Room; // true
 room13 instanceof DoubleRoom; // true
 room13.addGuest(new Guest("Robinson"));
 room13.isEmpty(); // false
 ```
-Rad. We got methods for free! We inherited the functionality of the `Room` class. `DoubleRoom` can be refereed to as a "sub-class" or "child class" of the "parent class" or "base class" `Room`. We still need to expose a constructor for our sub-class `DoubleRoom` but we can immediately pass the value up to the parent class `Room` to do the work of assigning the value to the property `number`. We can make the other types of rooms using inheritance.
+Rad. We got methods for free! We inherited the functionality of the `Room` class. `DoubleRoom` can be refereed to as a "sub-class" or "child class" of the "parent class" or "base class" or "super class" `Room`. We still need to expose a constructor for our sub-class `DoubleRoom` but we can immediately pass the value up to the parent class `Room` to do the work of assigning the value to the property `number`. We can make the other types of rooms using inheritance.
 ```java
 public class DoubleRoom extends Room {
     private double price = 79.99;
@@ -298,6 +298,17 @@ public class TwinRoom extends Room {
 
     public TwinRoom(int roomNumber) {
         super(roomNumber);
+    }
+}
+```
+Can you see we are repeating code in our sub-classes? The price property will be shared by all sub-classes of `Room`. It makes sense for this property to belong to the parent/base/super class. However we will want the sub-classes to set this price when they are instantiated. So we want a method that _only_ sub-classes can call to set the price. To do this we will use the `protected` permission level on the `setPrice` method we are adding to the base class. That means only sub-classes can call this 'setter' method.
+```java
+public class Room {
+    private double price;
+    //... other properties and methods
+
+    protected void setPrice(double price) {
+        this.price = price;
     }
 }
 ```

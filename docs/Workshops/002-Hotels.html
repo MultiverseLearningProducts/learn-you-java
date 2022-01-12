@@ -238,7 +238,7 @@
 <p>Now objects in our code can interact, and we can relate them together. You should now be able to create a guest, and place them into a hotel room!</p>
 <h2>Inheritance</h2>
 <p>Inheritance is a central design concept in OOP. It is a mechanism for sharing code and organising objects. What follows is an example of implementing inheritance and leveraging the design pattern to save us from repeatedly having to write code that basically does the same thing.</p>
-<p>Hotels have different room types. For example a double room, a single, a twin or family room. They are all rooms, they will all have a room number, they all need the interface to allow us to add and remove guests. However they diverge. A single room will only accept 1 guest then it will be full. The different types of room will all have their own prices.</p>
+<p>Hotels have different room types. For example a double room, a single, a twin or family room. They are all rooms, they will all have a room number, they all need the interface to allow us to add and remove guests. However they diverge. A single room will only accept 1 guest then it will not be empty. Each room type will have their own prices.</p>
 <p>There are 4 new keywords you are going to learn to get the hang of inheritance in Java.</p>
 <ol>
 <li><code>extends</code> - extend a class</li>
@@ -247,7 +247,7 @@
 <li><code>@Overide</code> - overwrite an inherited method</li>
 </ol>
 <h3>Extend a class</h3>
-<p>Instead of relying on the <code>String</code> &quot;Double&quot; to indicate that a room is a double room, we should actually have a <code>DoubleRoom</code> class that represents this type of room. We are going to treat the <code>Room</code> class as the abstracted generic blueprint of all rooms. We can make a &quot;Double&quot; room really easily.</p>
+<p>Instead of relying on the <code>String</code> &quot;Double&quot; to indicate that a room is a double room, we should actually have a <code>DoubleRoom</code> class that represents this type of room. We are going to treat the <code>Room</code> class as the abstract blueprint of all rooms. We can make a &quot;Double&quot; room really easily.</p>
 <pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DoubleRoom</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Room</span> </span>{
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">DoubleRoom</span><span class="hljs-params">(<span class="hljs-keyword">int</span> roomNumber)</span> </span>{
         <span class="hljs-keyword">super</span>(roomNumber);
@@ -257,13 +257,13 @@
 <p>Can you see the <code>extends</code> keyword when we define the class? Can you see where we use <code>super</code> to pass the room number to the <code>Room</code> constructor. What does it mean to inherit or extend the <code>Room</code> class? It means you can do things like this.</p>
 <pre><code class="language-java">DoubleRoom room13 = <span class="hljs-keyword">new</span> DoubleRoom(<span class="hljs-number">13</span>);
 
-room13.number; <span class="hljs-comment">// 13</span>
+room13.getNumber(); <span class="hljs-comment">// 13</span>
 room13 <span class="hljs-keyword">instanceof</span> Room; <span class="hljs-comment">// true</span>
 room13 <span class="hljs-keyword">instanceof</span> DoubleRoom; <span class="hljs-comment">// true</span>
 room13.addGuest(<span class="hljs-keyword">new</span> Guest(<span class="hljs-string">&quot;Robinson&quot;</span>));
 room13.isEmpty(); <span class="hljs-comment">// false</span>
 </code></pre>
-<p>Rad. We got methods for free! We inherited the functionality of the <code>Room</code> class. <code>DoubleRoom</code> can be refereed to as a &quot;sub-class&quot; or &quot;child class&quot; of the &quot;parent class&quot; or &quot;base class&quot; <code>Room</code>. We still need to expose a constructor for our sub-class <code>DoubleRoom</code> but we can immediately pass the value up to the parent class <code>Room</code> to do the work of assigning the value to the property <code>number</code>. We can make the other types of rooms using inheritance.</p>
+<p>Rad. We got methods for free! We inherited the functionality of the <code>Room</code> class. <code>DoubleRoom</code> can be refereed to as a &quot;sub-class&quot; or &quot;child class&quot; of the &quot;parent class&quot; or &quot;base class&quot; or &quot;super class&quot; <code>Room</code>. We still need to expose a constructor for our sub-class <code>DoubleRoom</code> but we can immediately pass the value up to the parent class <code>Room</code> to do the work of assigning the value to the property <code>number</code>. We can make the other types of rooms using inheritance.</p>
 <pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DoubleRoom</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Room</span> </span>{
     <span class="hljs-keyword">private</span> <span class="hljs-keyword">double</span> price = <span class="hljs-number">79.99</span>;
     
@@ -285,6 +285,16 @@ room13.isEmpty(); <span class="hljs-comment">// false</span>
 
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TwinRoom</span><span class="hljs-params">(<span class="hljs-keyword">int</span> roomNumber)</span> </span>{
         <span class="hljs-keyword">super</span>(roomNumber);
+    }
+}
+</code></pre>
+<p>Can you see we are repeating code in our sub-classes? The price property will be shared by all sub-classes of <code>Room</code>. It makes sense for this property to belong to the parent/base/super class. However we will want the sub-classes to set this price when they are instantiated. So we want a method that <em>only</em> sub-classes can call to set the price. To do this we will use the <code>protected</code> permission level on the <code>setPrice</code> method we are adding to the base class. That means only sub-classes can call this 'setter' method.</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Room</span> </span>{
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">double</span> price;
+    <span class="hljs-comment">//... other properties and methods</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setPrice</span><span class="hljs-params">(<span class="hljs-keyword">double</span> price)</span> </span>{
+        <span class="hljs-keyword">this</span>.price = price;
     }
 }
 </code></pre>
