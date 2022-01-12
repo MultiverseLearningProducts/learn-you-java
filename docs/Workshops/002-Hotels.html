@@ -27,25 +27,42 @@
 <h2>new Hotel</h2>
 <p>We are going to make a Hotel in Java. Our hotel can start off with a name. In a file called <code>Hotel.java</code> add the following public class.</p>
 <pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hotel</span> </span>{
-    <span class="hljs-keyword">public</span> String name;
+    <span class="hljs-keyword">private</span> String name;
 
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Hotel</span><span class="hljs-params">(String name)</span> </span>{
         <span class="hljs-keyword">this</span>.name = name;
     }
 }
 </code></pre>
-<p>The class has a property called <code>name</code> that is a string. I have added a <code>constructor</code> function to my class. The <code>public Hotel</code> method  on line 4 will be called when I create a new instance of this class like this.</p>
+<p>The class has a property called <code>name</code> that is a string. I have added a <code>constructor</code> function to my class. The <code>public Hotel</code> method on line 4 will be called when I create a new instance of this class like this.</p>
 <pre><code class="language-java">Hotel grand = <span class="hljs-keyword">new</span> Hotel(<span class="hljs-string">&quot;The Grand&quot;</span>);
 </code></pre>
 <p>When you see the <code>new</code> keyword you know that you are creating a new instance of a Hotel and that the constructor function is also being called. We pass the name of the hotel &quot;The Grand&quot; to the constructor function. When the hotel is constructed (or instantiated) it will be assigned a name. How will you be able to access the name of the hotel?</p>
-<pre><code class="language-java">grand.name <span class="hljs-comment">// &quot;The Grand&quot;</span>
+<pre><code class="language-java">grand.name <span class="hljs-comment">// The field Hotel.name is not visible</span>
+</code></pre>
+<p>Our hotel does have a name, but it is only visible to the methods of the Hotel class, and here we are on the outside of the class instance trying to read a property that is encapsulated within the class. If we what to access that property we need to add a 'getter' method to the class.</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hotel</span> </span>{
+    <span class="hljs-keyword">private</span> String name;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Hotel</span><span class="hljs-params">(String name)</span> </span>{
+        <span class="hljs-keyword">this</span>.name = name;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.name;
+    }
+}
+</code></pre>
+<p>This is a pattern is called <strong>Encapsulation</strong> you we see in all Java code, by default properties and methods of a class should be private, then you publicly expose <em>only</em> those things that other parts of the program need to read or write to.</p>
+<p>Can you think why that might be the case?</p>
+<pre><code class="language-java">grand.getName() <span class="hljs-comment">// The Grand</span>
 </code></pre>
 <table>
 <thead>
 <tr><th style="text-align:left">OOP Hotel</th><th style="text-align:left">A real world Hotel</th></tr>
 </thead>
 <tbody>
-<tr><td style="text-align:left"><span style="display:flex;align-items:center;height:279px;"><code>Hotel@182decdb</code></span></td><td style="text-align:left"><figure><img src="https://images.trvl-media.com/hotels/1000000/50000/45700/45673/385e0d93.jpg?" alt="the Grand Hotel"><figcaption></figcaption></figure></td></tr>
+<tr><td style="text-align:left"><span style="display:flex;align-items:center;height:200px;"><code>Hotel@182decdb</code></span></td><td style="text-align:left"><figure><img src="https://images.trvl-media.com/hotels/1000000/50000/45700/45673/385e0d93.jpg?" alt="the Grand Hotel"><figcaption></figcaption></figure></td></tr>
 </tbody>
 </table>
 <h2>OOP Design</h2>
@@ -61,20 +78,32 @@
 <h2>new Room</h2>
 <p>A room will have a room number. A room might be a Single, Twin or Double room, those different rooms will have different rates, and we'll want to check and see if the room is available or not. Finally we want to be able to place guests into the room. In a new file called <code>Room.java</code> can you create the following class definition.</p>
 <pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Room</span> </span>{
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> number;
-    <span class="hljs-keyword">public</span> String type = <span class="hljs-string">&quot;Double&quot;</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> number;
+    <span class="hljs-keyword">private</span> String type = <span class="hljs-string">&quot;Double&quot;</span>;
     
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Room</span><span class="hljs-params">(<span class="hljs-keyword">int</span> number)</span> </span>{
         <span class="hljs-keyword">this</span>.number = number;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getNumber</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.number;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getType</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.type;
     }
 }
 </code></pre>
 <p>Very similar to our <code>Hotel</code> class. Can you create a <code>Guest.java</code> with a <code>Guest</code> class that we can instantiate with a <code>String</code> that will have the property surname.</p>
 <pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Guest</span> </span>{
-    <span class="hljs-keyword">public</span> String surname;
+    <span class="hljs-keyword">private</span> String surname;
 
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Guest</span><span class="hljs-params">(String surname)</span> </span>{
         <span class="hljs-keyword">this</span>.surname = surname;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getSurname</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.surname;
     }
 }
 </code></pre>
@@ -84,7 +113,7 @@
         Hotel grand = <span class="hljs-keyword">new</span> Hotel(<span class="hljs-string">&quot;The Grand&quot;</span>);
         Guest simmonds = <span class="hljs-keyword">new</span> Guest(<span class="hljs-string">&quot;Simmonds&quot;</span>);
         Room room3 = <span class="hljs-keyword">new</span> Room(<span class="hljs-number">3</span>);
-        System.out.println(grand.name);
+        System.out.println(grand.getName());
     }
 }
 </code></pre>
@@ -92,7 +121,7 @@
 <p>At present our hotel has only a name. We will want to create a hotel and say how many rooms it has. When we instantiate a new hotel it would be good if we could also passing the number of rooms that we like that hotel to have. It will be an integer. Can you update your code when you create a new hotel to also accept an integer that will represent the number of rooms we want a hotel to have.</p>
 <p>Now if you think about your data structures what is the best data structure to hold an array of rooms? It is going to be an Array! We can use the number of rooms that the hotel needs to create an empty array and then we will iterate over it in a for loop and fill that array with rooms.</p>
 <pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hotel</span> </span>{
-    <span class="hljs-keyword">public</span> String name;
+    <span class="hljs-keyword">private</span> String name;
     <span class="hljs-keyword">private</span> Room[] rooms;
 
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Hotel</span><span class="hljs-params">(String name, <span class="hljs-keyword">int</span> numOfRooms)</span> </span>{
@@ -111,24 +140,21 @@
 <tr><th style="text-align:left">Debugging</th><th style="text-align:center">Admiral Grace Hopper</th></tr>
 </thead>
 <tbody>
-<tr><td style="text-align:left"><em>This is an odd term. Back in the early days of computing, computers were large constructions with physical valves and relays - they were bright warm and dusty things - very attractive to moths. The Mark II which was being built and run in Harvard University showed some unusual failing and faults. It got the engineering team curious as to what the problem was, upon closer investigation <a href="https://en.wikipedia.org/wiki/Grace_Hopper">Admiral Grace Hopper</a> discovered a dead moth was blocking one of the relays. They went looking for other bugs interfering with other parts of the system and told their team they needed to &quot;debug&quot; the system!</em></td><td style="text-align:center"><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Commodore_Grace_M._Hopper%2C_USN_%28covered%29.jpg/440px-Commodore_Grace_M._Hopper%2C_USN_%28covered%29.jpg" alt="Admiral Grace Hopper"><figcaption></figcaption></figure></td></tr>
+<tr><td style="text-align:left"><em>This is an odd term. Back in the early days of computing, computers were large constructions with physical valves and relays - they were bright warm and dusty things - very attractive to moths. The Mark II which was being built and run in Harvard University showed some unusual failing and faults. It got the engineering team curious as to what the problem was, upon closer investigation <a href="https://en.wikipedia.org/wiki/Grace_Hopper">Admiral Grace Hopper</a> discovered a dead moth was blocking one of the relays. They went looking for other bugs interfering with other parts of the system and told their team they needed to &quot;debug&quot; the system!</em></td><td style="text-align:center"><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Commodore_Grace_M._Hopper%2C_USN_%28covered%29.jpg/440px-Commodore_Grace_M._Hopper%2C_USN_%28covered%29.jpg" alt="Admiral Grace Hopper" title="James S. Davis - This image was released by the United States Navy with the ID DN-SC-84-05971 © Public Domain. Created: 20 January 1984"><figcaption>James S. Davis - This image was released by the United States Navy with the ID DN-SC-84-05971 © Public Domain. Created: 20 January 1984</figcaption></figure></td></tr>
 </tbody>
 </table>
 <p>Let's use the debugger to inspect the objects in our code and verify that we do have a hotel with rooms in it.</p>
-<p>First create a breakpoint on the last line of the main method in your <code>Main.java</code> file after you declare and assign your Hotel. You can add a <code>System.out.println(hotel.name)</code> and add the breakpoint to that line.</p>
+<p>First create a breakpoint on the last line of the main method in your <code>Main.java</code> file after you declare and assign your Hotel. You can add a <code>System.out.println(hotel.getName())</code> and add the breakpoint to that line.</p>
 <p><em>you might need to goto: vscode-&gt;settings-&gt;features-&gt;debug-&gt;<strong>Allow Breakpoints Everywhere</strong></em></p>
 <p><figure><img src="https://user-images.githubusercontent.com/4499581/148397894-e65070c3-73b0-4ede-a6a2-b6eb5ad3cad4.png" alt="adding a breakpoint"><figcaption></figcaption></figure></p>
 <p>Can you see the red dot that I added to the left of the line numbers? That is a breakpoint. When we run our program in debug mode the program will stop there. Then we will be able to inspect our hotel. Try clicking on 'debug' instead of 'run' to start a debugging session.</p>
 <p><figure><img src="https://user-images.githubusercontent.com/4499581/148399443-a471f985-7560-4284-a50a-a09101af0bf7.jpg" alt="annotated debugging screen"><figcaption></figcaption></figure></p>
 <p>Take a moment to orientate yourself and inspect your hotel object. Our code is paused at the breakpoint, so what comes after the breakpoint has not yet been executed. While we are paused here we can look around in our program, inspect the local variables, and even interact with our code by writing expressions in the 'DEBUG CONSOLE' tab. Pretty amazing and very useful.</p>
 <p>You can also see you have a set of controls, like pause/play, step over, step into etc. These control the execution of your program, so you can step over a function, or into it and move through your program step by step, following the path of execution.</p>
-<h2>Interfaces and interactions</h2>
-<p><figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Plug_types_2.svg/1353px-Plug_types_2.svg.png" alt="Interfaces and interactions" title="creative commons license: This file is from the Open Clip Art Library, which released it explicitly into the public domain (see here). Original URL: https://openclipart.org/detail/296158/all-plug-types the image has not been altered"><figcaption>creative commons license: This file is from the Open Clip Art Library, which released it explicitly into the public domain (see here). Original URL: https://openclipart.org/detail/296158/all-plug-types the image has not been altered</figcaption></figure></p>
-<p>What type of plug sockets did you grow up with? Can you see it in the picture above? In the next section we are going to introduce the idea of interfaces. An interface is made up of the properties and methods a class exposes publicly to other parts of a program or network. It is by implementing interfaces that we are going to be able to have our classes interact with each other. In the illustrations above you can see the different types of socket interfaces that expose electricity to us. If we have the right plug that matches the interfaces we can access electricity through the socket.</p>
-<h3>Adding methods</h3>
+<h2>Adding methods</h2>
 <p>We have a hotel with rooms for guests. Now we want to be able to plug a guest into a room. To do this our objects will interact. Usually when a guest arrives at the hotel they check-in and the hotel assign them their room. It makes sense for the hotel to take responsibility for placing a guest in a room. At present our hotel has no way for us to check-in a guest. What we need to do is build out the Hotel's interface by adding a method.</p>
 <pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hotel</span> </span>{
-    <span class="hljs-keyword">public</span> String name;
+    <span class="hljs-keyword">private</span> String name;
     <span class="hljs-keyword">private</span> Room[] rooms;
 
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Hotel</span><span class="hljs-params">(String name, <span class="hljs-keyword">int</span> numOfRooms)</span> </span>{
@@ -137,6 +163,10 @@
         <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; numOfRooms; i++) {
             <span class="hljs-keyword">this</span>.rooms[i] = <span class="hljs-keyword">new</span> Room(i);
         }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.name;
     }
 
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">checkIn</span><span class="hljs-params">(Guest guest)</span> </span>{
@@ -155,15 +185,10 @@
     }
 }
 </code></pre>
-<p>This is another interface, but this time on the <code>Room</code> class. Here we are in the essential point of this workshop which is writing code were classes interact with one another. You will need to update your <code>Room</code> class as well at the <code>Hotel</code> class to complete the task of adding a guest to a room.</p>
-<p>📌 Remember the SOLID principles mentioned earlier? <em>Minimal interfaces</em> in the <em>SOLID</em> principles is called <strong>Interface segregation principle</strong> it is the <strong>I</strong> in S.O.L.<strong>I</strong>.D. principles.</p>
-<blockquote>
-<p>A client should never be forced to implement an interface that it doesn’t use, or clients shouldn’t be forced to depend on methods they do not use.</p>
-</blockquote>
-<p>This principles encourages us to expose only what is needed. We need these interfaces of <code>checkIn</code> and <code>isEmpty</code> so let's update our classes to have these interfaces and make sure there is somewhere cosy for our guests to sleep!</p>
+<p>This is another method, but this time on the <code>Room</code> class. Here we are in the essential point of this workshop which is writing code were classes interact with one another. You will need to update your <code>Room</code> class as well at the <code>Hotel</code> class to complete the task of adding a guest to a room.</p>
 <pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Room</span> </span>{
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> number;
-    <span class="hljs-keyword">public</span> String type = <span class="hljs-string">&quot;Double&quot;</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> number;
+    <span class="hljs-keyword">private</span> String type = <span class="hljs-string">&quot;Double&quot;</span>;
     <span class="hljs-keyword">private</span> Guest[] beds = {<span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>};
 
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Room</span><span class="hljs-params">(<span class="hljs-keyword">int</span> roomNumber)</span> </span>{
@@ -173,23 +198,21 @@
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isEmpty</span> <span class="hljs-params">()</span> </span>{
         <span class="hljs-comment">// need logic to check room is empty</span>
     }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getNumber</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.number;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getType</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.type;
+    }
 }
 </code></pre>
-<p>Once we've found an empty room, we will need an interface to add a guest, and remove them when they check-out. Your <code>Room</code> class might end up looking something like this.</p>
+<p>Once we've found an empty room, we will need a method to add a guest, and remove them when they check-out. Your <code>Room</code> class might now include methods like these.</p>
 <pre><code class="language-java"><span class="hljs-keyword">import</span> java.util.Arrays;
 
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Room</span> </span>{
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> number;
-    <span class="hljs-keyword">public</span> String type = <span class="hljs-string">&quot;Double&quot;</span>;
-    <span class="hljs-keyword">private</span> Guest[] beds = {<span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>};
-
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Room</span><span class="hljs-params">(<span class="hljs-keyword">int</span> roomNumber)</span> </span>{
-        <span class="hljs-keyword">this</span>.number = roomNumber;
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isEmpty</span> <span class="hljs-params">()</span> </span>{
-        <span class="hljs-keyword">return</span> Arrays.asList(<span class="hljs-keyword">this</span>.beds).contains(<span class="hljs-keyword">null</span>);
-    }
+    <span class="hljs-comment">//... other properties and methods</span>
 
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addGuest</span><span class="hljs-params">(Guest guest)</span> </span>{
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.beds[<span class="hljs-number">0</span>] == <span class="hljs-keyword">null</span>) {

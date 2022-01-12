@@ -136,6 +136,13 @@ h1::after {
 hr {
   border: solid 1px var(--mv-gray);
 }
+figcaption {
+  font-size: 0.5rem;
+}
+figcaption::before {
+  content: '/learn-you-java/images/cc.logo.svg';
+  height: 1rem;
+}
 .tabbed-code-block nav {
   display: flex;
   align-items: center;
