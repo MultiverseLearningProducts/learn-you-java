@@ -23,6 +23,250 @@
     <nav id="navigation"><ul><details><summary>Workshops</summary><ul><li><a class="nav-link" href="/learn-you-java/Workshops/001-Noughts-and-crosses.html">001 Noughts and crosses</a></li><li><a class="nav-link" href="/learn-you-java/Workshops/002-Hotels.html">002 Hotels</a></li><li><a class="nav-link" href="/learn-you-java/Workshops/003-Supermarkets.html">003 Supermarkets</a></li></ul></details></ul></nav>
     <h1>Supermarkets</h1>
 <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;"> <iframe style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden" frameborder="0" type="text/html" src="https://www.dailymotion.com/embed/video/k2NtiAaKBoUurcxxbgE" width="100%" height="100%" allowfullscreen > </iframe> </div>
+<p>The applications you write will nearly always dealing with data in some form. The more ways you know to organise and store data in an application the more robust and effective code you'll be able to write. In this workshop we are going to learn about 4 data structures that take us beyond the limitations of the humble Array. By the end of this workshop you should have a few more Java tricks up your developer sleave!</p>
+<h2>You will be learning to use</h2>
+<ul>
+<li>ArrayList</li>
+<li>HashMap</li>
+<li>Stack</li>
+<li>ArrayDeque</li>
+</ul>
+<h2>Abstraction</h2>
+<p>Do you remember the way we created a <code>Room</code> class in the Hotels workshop? We ended up turning the <code>Room</code> class into an abstract class. Being an abstract class meant we never used the class to create objects in our code, instead it became a repository of state and methods that we then shared via inheritance with our sub-classes <code>SingleRoom</code>, <code>DoubleRoom</code> etc.</p>
+<h2>Interfaces</h2>
+<p>In Java you can take the idea of an abstract class to the next level by defining an <code>Interface</code>. This is then next level of abstraction. Our <code>Room</code> class had properties and methods defined within it. An interface would just have placeholder properties and methods.</p>
+<pre><code class="language-java"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">RoomInterface</span> </span>{
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> number;
+    <span class="hljs-keyword">private</span> String type = <span class="hljs-string">&quot;Double&quot;</span>;
+    <span class="hljs-keyword">private</span> Guest[] beds = {<span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>};
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isEmpty</span> <span class="hljs-params">()</span> </span>{}
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getNumber</span><span class="hljs-params">()</span> </span>{}
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addGuest</span><span class="hljs-params">(Guest guest)</span> </span>{}
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Guest <span class="hljs-title">removeGuest</span><span class="hljs-params">()</span> </span>{}
+}
+</code></pre>
+<p>We might then use the <code>interface</code> like this:</p>
+<pre><code class="language-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Room</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">RoomInterface</span> </span>{
+    <span class="hljs-comment">// class definition in here</span>
+}
+</code></pre>
+<p>Now it would be upto us to implement all those properties and methods. How our version of <code>addGuest</code> works within our <code>Room</code> class is upto us - but our code will not compile unless we honor the contract and implement the interface completely. Interfaces are another level of abstraction above abstract classes. They define a shared set of properties and methods among the classes and sub-classes that implement the interface or inherit from classes that do.</p>
+<p>Today there are 3 interfaces that behave like our <code>RoomInterface</code> class that would be helpful to learn about first. They are:</p>
+<ol>
+<li>Map</li>
+<li>List</li>
+<li>Queue</li>
+</ol>
+<h3>Map</h3>
+<table>
+<thead>
+<tr><th style="text-align:left">Key</th><th style="text-align:left">Value</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">001</td><td style="text-align:left">Bread</td></tr>
+<tr><td style="text-align:left">002</td><td style="text-align:left">Cheese</td></tr>
+<tr><td style="text-align:left">003</td><td style="text-align:left">Wine</td></tr>
+</tbody>
+</table>
+<p>A Map store things in key values pairs. The idea of this data structure is we can look things up really quickly and easily. For example what is <code>003</code>?</p>
+<p><figure><img src="https://user-images.githubusercontent.com/4499581/150323480-7ff70da7-f427-4849-a45a-9458acc578c5.png" alt="Map interface"><figcaption></figcaption></figure></p>
+<p>There are different types of Map, but you know you can call <code>getOrDefault(K, defaultValue)</code> on HashMap, TreeMap, WeakHashMap etc. it will work on all of them.</p>
+<p>You will use HashMap!</p>
+<h3>List</h3>
+<pre><code class="language-java">[ Item, Item, Item ]
+</code></pre>
+<p>A list is an array, but without the limitation of having to declare upfront how many items will be in the array. The List is a very useful data structure that enables us to add and remove items as our program requires.</p>
+<p><figure><img src="https://user-images.githubusercontent.com/4499581/150323478-6f4b56d8-103d-48b8-9bc3-c6cdc7b1a5f8.png" alt="List interface and classes"><figcaption></figcaption></figure></p>
+<p>There are structures that are a variation on List, but they will all respond to <code>contains()</code>. So we can call <code>contains</code> on an ArrayList, LinkedList, Stack or Vector.</p>
+<p>In the Stack structure items are put on the stack then taken off it in order. It is like putting things in your shopping trolly, the first items you put in are the last ones to come out.</p>
+<p><figure><img src="https://miro.medium.com/max/1280/0*SESFJYWU5a-3XM9m.gif" alt="Stack" title="https://dev.to/adavidoaiei/fundamental-data-structures-and-algorithms-in-c-4ocf"><figcaption>https://dev.to/adavidoaiei/fundamental-data-structures-and-algorithms-in-c-4ocf</figcaption></figure></p>
+<p>You will be using ArrayList and Stack!</p>
+<h3>Queue</h3>
+<p>A queue will let us add and remove items from a queue. It means we can deal with things in order, like shoppers queue to checkout their shopping one at a time.</p>
+<p><figure><img src="https://user-images.githubusercontent.com/4499581/150323483-8259d588-56a7-430c-b234-4f8165523b98.png" alt="Queue" title="Multiverse"><figcaption>Multiverse</figcaption></figure></p>
+<p>These structures are amazing at organising a series of tasks, or things that need to be processed but can't all be done at the same time.</p>
+<p><figure><img src="https://1.bp.blogspot.com/-N-v_FiIdQXM/XlkFCQQYtPI/AAAAAAAAHR0/zxkuX6WfQS8Y8Mkoj1nHZDWtMOD3MjsUwCLcBGAsYHQ/s1600/0_E33E-AjyAUTFjVmM.gif" alt="Que" title="https://dev.to/adavidoaiei/fundamental-data-structures-and-algorithms-in-c-4ocf"><figcaption>https://dev.to/adavidoaiei/fundamental-data-structures-and-algorithms-in-c-4ocf</figcaption></figure></p>
+<p>You will use ArrayDeque!</p>
+<h3>Collections</h3>
+<p>Finally for List and Queue there is another level of shared functionality as they both implement the <code>Collection</code> interface.</p>
+<p><figure><img src="https://user-images.githubusercontent.com/4499581/150324442-cc4e63d1-b3c0-4511-9001-6ae9a51d4733.png" alt="Collections interface"><figcaption></figcaption></figure></p>
+<h2>Let's code!</h2>
+<p>First of all create a supermarket.</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Supermarket</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Supermarket</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-comment">// we can code in here</span>
+    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] ___)</span> </span>{
+        <span class="hljs-keyword">new</span> Supermarket();
+    }
+}
+</code></pre>
+<p>Why do we go to the supermarket? To get products. Can you make a <code>Product</code> class, that has the description of the product as a <code>String</code> and the recommended retail price (RRP) as a <code>double</code>. We also want some like of barcode so we can keep track of our product. Can you see below I'm getting the <code>hashCode</code> of the product's description (desc) and returning that. The <code>hashCode</code> of a string will always result in the same numerical value. You will see why we might want that in a minuet.</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Product</span> </span>{
+    <span class="hljs-keyword">private</span> String desc;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">double</span> RRP;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Product</span><span class="hljs-params">(String desc, <span class="hljs-keyword">double</span> RRP)</span> </span>{
+        <span class="hljs-keyword">this</span>.desc = desc;
+        <span class="hljs-keyword">this</span>.RRP = RRP;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getDesc</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.desc;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">double</span> <span class="hljs-title">getPrice</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.RRP;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getBarcode</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> String(<span class="hljs-keyword">this</span>.desc).hashCode();
+    }
+}
+</code></pre>
+<h3>Inventory</h3>
+<p>In our supermarket we can start our inventory. If we use an array of items.</p>
+<pre><code class="language-java">Product[] products = <span class="hljs-keyword">new</span> Product[?];
+</code></pre>
+<p>We would have to state what the size of the array is. This is a pain for us because we don't know ahead of time how many products we might have in our inventory. It's likely over time we'll want to add new products to our supermarket. What we really want is an array we can just add things to, that will grow and shrink. For this we need <code>ArrayList</code>.</p>
+<pre><code class="language-java">    <span class="hljs-keyword">private</span> ArrayList&lt;Product&gt; products = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+</code></pre>
+<p>You will have to import <code>ArrayList</code> because we are now reaching for things outside the default <code>java.lang</code> package. At the top of your file add.</p>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+</code></pre>
+<p>Now we have an few methods on ArrayList we can use to organise our products; Below are examples of the create, read, update, delete (CRUD) method calls.</p>
+<pre><code class="language-java">    <span class="hljs-comment">// CREATE</span>
+    products.add(<span class="hljs-keyword">new</span> Product(<span class="hljs-string">&quot;Coffee&quot;</span>, <span class="hljs-number">2.79</span>));
+    products.add(<span class="hljs-keyword">new</span> Product(<span class="hljs-string">&quot;Sugar&quot;</span>, <span class="hljs-number">1.20</span>));
+    products.add(<span class="hljs-keyword">new</span> Product(<span class="hljs-string">&quot;Tea&quot;</span>, <span class="hljs-number">2.50</span>));
+    products.add(<span class="hljs-keyword">new</span> Product(<span class="hljs-string">&quot;Rum&quot;</span>, <span class="hljs-number">12.79</span>));
+    <span class="hljs-comment">// READ</span>
+    products.size() <span class="hljs-comment">// 4</span>
+    products.get(<span class="hljs-number">0</span>) <span class="hljs-comment">// Product@hashCode</span>
+    <span class="hljs-comment">// UPDATE</span>
+    products.set(<span class="hljs-number">3</span>, <span class="hljs-keyword">new</span> Product(<span class="hljs-string">&quot;Rum&quot;</span>, <span class="hljs-number">13.50</span>));
+    <span class="hljs-comment">// Destroy</span>
+    products.remove(<span class="hljs-number">3</span>)
+    products.size() <span class="hljs-comment">// 3</span>
+    products.clear()
+    products.size() <span class="hljs-comment">// 0</span>
+</code></pre>
+<p>The ArrayList is helping us to organise our inventory. The next thing to think about are the stock levels.</p>
+<h3>Stock levels</h3>
+<p>In our supermarket we will want to keep track of the stock levels we have for our inventory. When an item is purchased at the checkout, we should decrement our stock levels and ensure we order more of that item when stocks are low. This is were our barcode comes in.</p>
+<p>At the checkout we scan a product and read the barcode. We can use the barcode as a key to look up the stock level for that product, and decrement it. In the body of the <code>Supermarket</code> class add the stock property.</p>
+<pre><code class="language-java">    <span class="hljs-keyword">private</span> HashMap&lt;Integer, Integer&gt; stock = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+</code></pre>
+<p>Then in our constructor function once you have added all your inventory items you can iterate over them and add a key, value pair (the barcode is the key, the value is the initial stock level of 10).</p>
+<pre><code class="language-java">        inventory.add(<span class="hljs-keyword">new</span> Product(<span class="hljs-string">&quot;Bread&quot;</span>, <span class="hljs-number">0.56</span>));
+        inventory.add(<span class="hljs-keyword">new</span> Product(<span class="hljs-string">&quot;Coffee&quot;</span>, <span class="hljs-number">2.69</span>));
+        inventory.add(<span class="hljs-keyword">new</span> Product(<span class="hljs-string">&quot;Tea&quot;</span>, <span class="hljs-number">2.39</span>));
+        <span class="hljs-keyword">for</span>(Product product : inventory) {
+            <span class="hljs-comment">//   .put(        key         ,   value  );</span>
+            stock.put(product.getBarcode(),    <span class="hljs-number">10</span>    );
+        }
+</code></pre>
+<p>At this point we have used 2 new data structures, ArrayList and HashMap.</p>
+<h3>Shopper</h3>
+<p>We are ready to go shopping. Let us create a <code>Shopper</code> class to represent our shopper, the most important property they will own is their trolly. We want the shopper to be able to add products into there trolly and then at the checkout remove them one by one. In the real world items placed in the trolly first are at the bottom, additional items are placed on top. At the checkout the last products placed in the trolly are the first ones to be scanned. Sounds like a Stack to me!</p>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> java.util.Stack;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Shopper</span> </span>{
+    <span class="hljs-keyword">private</span> Stack&lt;Product&gt; trolly = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addProduct</span><span class="hljs-params">(Product product)</span> </span>{
+        trolly.push(product);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Product <span class="hljs-title">getProduct</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> trolly.pop();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">hasProducts</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> !trolly.isEmpty();
+    }
+}
+</code></pre>
+<h3>Let's go shopping</h3>
+<p>You can now create a couple of shoppers and go shopping. My supermarket looks something like this:</p>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.HashMap;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Supermarket</span> </span>{
+    <span class="hljs-keyword">private</span> HashMap&lt;Integer, Integer&gt; stock = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+    <span class="hljs-keyword">private</span> ArrayList&lt;Item&gt; inventory = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Supermarket</span><span class="hljs-params">()</span> </span>{
+        inventory.add(<span class="hljs-keyword">new</span> Item(<span class="hljs-string">&quot;Bread&quot;</span>, <span class="hljs-number">0.56</span>));
+        inventory.add(<span class="hljs-keyword">new</span> Item(<span class="hljs-string">&quot;Coffee&quot;</span>, <span class="hljs-number">2.69</span>));
+        inventory.add(<span class="hljs-keyword">new</span> Item(<span class="hljs-string">&quot;Tea&quot;</span>, <span class="hljs-number">2.39</span>));
+        <span class="hljs-keyword">for</span>(Item item : inventory) {
+            stock.put(item.getBarcode(), <span class="hljs-number">10</span>);
+        }
+        Shopper shopper = <span class="hljs-keyword">new</span> Shopper();
+        Shopper shopper2 = <span class="hljs-keyword">new</span> Shopper();
+        shopper.addItem(inventory.get(<span class="hljs-number">0</span>));
+        shopper.addItem(inventory.get(<span class="hljs-number">0</span>));
+        shopper.addItem(inventory.get(<span class="hljs-number">2</span>));
+        shopper2.addItem(inventory.get(<span class="hljs-number">0</span>));
+        shopper2.addItem(inventory.get(<span class="hljs-number">1</span>));
+        shopper2.addItem(inventory.get(<span class="hljs-number">2</span>));
+    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] ___)</span> </span>{
+        <span class="hljs-keyword">new</span> Supermarket();
+    }
+}
+</code></pre>
+<h3>Queue at the checkout</h3>
+<p>Our shoppers are ready to buy their products. Usually in a supermarket when you are ready to leave and pay you queue at the checkout. Each shopper's shopping is then processed one shopper at a time. Shoppers join the queue at the back, the last position. Shoppers at the front of the queue get to process their shopping. Sounds like a Queue to me!</p>
+<p>Add a checkout to your <code>Supermarket</code> class. We'll use the ArrayDeque.</p>
+<pre><code class="language-java"><span class="hljs-keyword">private</span> ArrayDeque&lt;Shopper&gt; checkout = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+</code></pre>
+<p>Can you add your shoppers to the checkout (back of the queue!)? You can use either <code>add()</code> or <code>addLast()</code> they both insert the specified element at the end of the array deque.</p>
+<pre><code class="language-java">checkout.addLast(shopper1);
+checkout.addLast(shopper2);
+</code></pre>
+<h3>Process our shoppers</h3>
+<p>Now we have a queue at our checkout we need to write the code to process our shoppers. As we just want to keep working while there are shoppers, we should leverage the while loop.</p>
+<pre><code class="language-java">    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processShoppers</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">while</span>(!checkout.isEmpty()) {
+            Shopper shopper = checkout.pollFirst();
+            <span class="hljs-keyword">double</span> total = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">while</span>(shopper.hasItems()) {
+                Item item = shopper.getItem();
+                total += item.getPrice();
+                <span class="hljs-keyword">int</span> currentStock = stock.get(item.getBarcode());
+                stock.replace(item.getBarcode(), currentStock - <span class="hljs-number">1</span>);
+            }
+            System.out.printf(<span class="hljs-string">&quot;Shopper %d total: £%f2\n&quot;</span>, shopper.hashCode(), total);
+        }
+    }
+</code></pre>
+<p>In the code above what is the first while condition? How does that become false?<br>
+What does <code>pollFirst</code> do that is different to <code>getFirst</code>?</p>
+<h2>Assignment</h2>
+<p>We have learnt about the hierarchy of the collections framework, and how interfaces work in Java. You have used 4 different Java utilities to organise and work with data.</p>
+<ol>
+<li>ArrayList</li>
+<li>HashMap</li>
+<li>Stack</li>
+<li>ArrayDeque</li>
+</ol>
+<p>You have used 2 Packages from the <code>java.base</code> module.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Package</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><code>java.lang</code></td><td style="text-align:left">Provides classes that are fundamental to the design of the Java programming language. The most important classes are Object, which is the root of the class hierarchy, and Class, instances of which represent classes at run time.</td></tr>
+<tr><td style="text-align:left"><code>java.util</code></td><td style="text-align:left">Contains the collections framework, some internationalization support classes, a service loader, properties, random number generation, string parsing and scanning classes, base64 encoding and decoding, a bit array, and several miscellaneous utility classes. This package also contains legacy collection classes and legacy date and time classes</td></tr>
+</tbody>
+</table>
+<p>Take a little time to read and explore the Oracle documentation. Can you find the documentation for ArrayList, HashMap, Stack and ArrayDeque? Read through some of the descriptions until you have a sense of what is available. You do not need to memorize or fully understand every class in every package to learn Java. Knowing what is available is enough at this stage. When it's time to reach for something (kind reading a file off of disk <code>java.io</code>) you can go to the documentation and find out how to use that part of the language.</p>
 
     <nav id="footer-nav"></nav>
     <script src="/learn-you-java/js/tabbed-code-blocks.js"></script>
