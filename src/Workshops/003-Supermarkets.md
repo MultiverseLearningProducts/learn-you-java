@@ -283,6 +283,8 @@ Now we have a queue at our checkout we need to write the code to process our sho
 In the code above what is the first while condition? How does that become false?
 What does `pollFirst` do that is different to `getFirst`?
 
+[read the code](https://github.com/bmordan/java-supermarkets)
+
 ## Assignment
 
 We have learnt about the hierarchy of the collections framework, and how interfaces work in Java. You have used 4 different Java utilities to organise and work with data.
