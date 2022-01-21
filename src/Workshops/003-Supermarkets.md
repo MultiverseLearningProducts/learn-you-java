@@ -299,8 +299,8 @@ You have used 2 Packages from the `java.base` module.
 |`java.lang`|Provides classes that are fundamental to the design of the Java programming language. The most important classes are Object, which is the root of the class hierarchy, and Class, instances of which represent classes at run time.|
 |`java.util`|Contains the collections framework, some internationalization support classes, a service loader, properties, random number generation, string parsing and scanning classes, base64 encoding and decoding, a bit array, and several miscellaneous utility classes. This package also contains legacy collection classes and legacy date and time classes|
 
-Take a little time to read and explore the Oracle documentation. Can you find the documentation for ArrayList, HashMap, Stack and ArrayDeque? Read through some of the descriptions until you have a sense of what is available. You do not need to memorize or fully understand every class in every package to learn Java. Knowing what is available is enough at this stage. When it's time to reach for something (kind reading a file off of disk `java.io`) you can go to the documentation and find out how to use that part of the language.
+Take a little time to read and explore the Oracle documentation. Can you find the documentation for ArrayList, HashMap, Stack and ArrayDeque? Read through some of the descriptions until you have a sense of what is available. You do not need to memorize or fully understand every class in every package to learn Java. Knowing what is available is enough at this stage. When it's time to reach for something (like reading a file off of disk `java.io`) you can go to the documentation and find out how to use that part of the language.
 
-## Supermarket walkthough video
+## Supermarket walk-though video
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/8e57fb75e2224b52b12f5c36a233b9e2" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>

@@ -414,3 +414,7 @@ We've used only 1 breakpoint so far. What you can do is create your objects in t
 ## 🧙‍♀️ For the Wizards
 
 How could you generate a bill for your guests upon checkout? We have not considered in our Hotel how we will deal with the passage of time? For example some guests might like to stay for just one night, other might like to stay for the week.
+
+## Knowledge check
+
+[Quick knowledge check-in](https://app.sli.do/event/dscP2ypeUFHiwWGxnXkFqv)
