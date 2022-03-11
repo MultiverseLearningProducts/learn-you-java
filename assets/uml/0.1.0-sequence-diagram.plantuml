@@ -1,0 +1,10 @@
+@startuml
+boundary "Airport" as a
+control "Baggage Control" as bc
+participant "Flight" as f
+a --> bc : check in baggage
+bc --> f : board plane
+f --> f
+f --> bc : disembark plane
+bc --> a : customs check
+@enduml

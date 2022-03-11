@@ -1,0 +1,42 @@
+@startuml
+class Person {
+    -name: String
+    -bags: Bag[]
+    +addBag(Bag): void
+    +getBag(): Bag
+}
+class Passenger extends Person {
+    -seatNumber: int
+    +assignSeatNumber(int): void
+}
+class AirCrew extends Person {
+    -airMiles: int
+    +addAirMiles(int): void
+}
+class Airport {
+    - {static} airports: ArrayList<Airport>
+    ---
+    -code: String
+    -name: String
+    -planes: ArrayList<Plane>
+    ---
+    +landPlane(Plane): void
+}
+class Plane {
+    -destination: String
+    -location: String
+    -passengers: ArrayList<Passenger>
+    +board(Passenger): void
+    +disembark(): void
+    +setDestination(Airport): void
+    +setLocation(Airport): void
+    +takeOff(): void
+}
+class Bag {
+    -weight: int
+    +getWeight(): int
+}
+Person -- Bag
+Person --* Plane
+Plane --- Airport
+@enduml

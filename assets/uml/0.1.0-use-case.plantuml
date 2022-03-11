@@ -1,0 +1,20 @@
+@startuml
+left to right direction
+Actor Passenger as P
+Actor AirCrew as C
+rectangle Airport {
+    usecase "check in Bag" as cib
+    usecase "board Plane" as bp
+    usecase "disembark from Plane" as dp
+    usecase "fly Plane" as fp
+    usecase "land Plane" as lp
+}
+P --> cib
+C --> cib
+P --> bp
+C --> bp
+P --> dp
+C --> dp
+C --> lp
+C --> fp
+@enduml
